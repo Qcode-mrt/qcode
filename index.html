@@ -2,7 +2,7 @@
 <title>Qcode Workspace</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Fredoka:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=DM+Serif+Display&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Fredoka:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=DM+Serif+Display:ital@0;1&family=Dancing+Script:wght@700&display=swap">
 <style>
 /* Layout: cover "blueprint" gelap dengan wordmark Qcode + daftar zona → halaman zona & portal kartu berwarna */
 :root{
@@ -156,7 +156,15 @@ button,input,select,textarea{font:inherit;color:inherit}
 .scene-txt .stat{min-width:96px;padding:10px 14px}
 .scene-txt .stat b{font-size:28px}
 .scene-txt .cover-stats{gap:10px}
-.cover .scene-txt .wm{font-size:clamp(64px,10vw,150px);margin:6px 0 4px}
+.cover .scene-txt .wm{font-size:clamp(60px,7.6vw,140px);margin:6px 0 4px;white-space:nowrap}
+/* Laptop & mug mengecil di layar laptop kecil supaya tidak menempel ke logo */
+@media (max-width:1300px) and (min-width:981px){
+  .scene{gap:40px}
+  .laptop{width:300px}
+  .lap-screen{width:268px;height:168px;border-width:9px;border-bottom-width:12px}
+  .lap-base{width:300px;height:12px}
+  .mug{transform:scale(.85);transform-origin:bottom left;margin-right:-8px}
+}
 .cover-sub{margin-top:6px}
 .cover-lead{margin:10px 0 22px}
 .scene-prop{position:relative;z-index:1;display:flex;align-items:flex-end;gap:16px;flex-shrink:0}
@@ -866,6 +874,88 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 .q-enter:hover .qm,.q-enter:focus-visible .qm{transform:none;filter:none}
 @media (max-width:640px){.fl-bubble{max-width:170px;font-size:12px}}
 
+
+/* ================= LANGIT IKUT JAM: pagi · siang · sore · malam ================= */
+.sky-day{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease,background 1.2s ease}
+.cover[data-sky="pagi"] .sky-day{opacity:1;background:linear-gradient(180deg,#3B5BB8 0%,#8F7BD6 38%,#F7A9A0 72%,#FFD4A3 100%)}
+.cover[data-sky="siang"] .sky-day{opacity:1;background:linear-gradient(180deg,#1C5FD0 0%,#3F8CEB 50%,#8CC6F7 100%)}
+.cover[data-sky="sore"] .sky-day{opacity:1;background:linear-gradient(180deg,#2B1B5E 0%,#7A3C8F 35%,#E2657A 68%,#FFA35C 100%)}
+.stars{transition:opacity 1.2s}
+.cover[data-sky="pagi"] .stars{opacity:.15!important}
+.cover[data-sky="siang"] .stars{opacity:0!important;animation:none}
+.cover[data-sky="sore"] .stars{opacity:.3!important}
+/* Matahari: bulan berubah jadi matahari bersinar */
+.moon{transition:background .8s,box-shadow .8s,width .8s,height .8s}
+.moon::before{content:"";position:absolute;inset:-26px;border-radius:50%;opacity:0;transition:opacity .8s;background:repeating-conic-gradient(from 0deg,rgb(255 222 120 / .55) 0deg 8deg,transparent 8deg 30deg);-webkit-mask:radial-gradient(circle,transparent 46%,#000 47%,#000 62%,transparent 70%);mask:radial-gradient(circle,transparent 46%,#000 47%,#000 62%,transparent 70%)}
+.cover:is([data-sky="pagi"],[data-sky="siang"],[data-sky="sore"]) .moon::after{opacity:0}
+.cover:is([data-sky="pagi"],[data-sky="siang"],[data-sky="sore"]) .moon::before{opacity:1}
+.cover[data-sky="siang"] .moon{background:radial-gradient(circle at 40% 38%,#FFFBE0,#FFE066 55%,#FFC21A);box-shadow:0 0 50px 16px rgb(255 214 70 / .45),0 0 140px 60px rgb(255 230 120 / .25)}
+.cover[data-sky="pagi"] .moon{top:auto;bottom:38%;background:radial-gradient(circle at 40% 38%,#FFF4D6,#FFC46B 55%,#FF9A3C);box-shadow:0 0 50px 18px rgb(255 160 80 / .45),0 0 150px 70px rgb(255 180 110 / .25)}
+.cover[data-sky="sore"] .moon{top:auto;bottom:30%;width:86px;height:86px;background:radial-gradient(circle at 40% 38%,#FFE3B8,#FF8A4C 55%,#E2504F);box-shadow:0 0 60px 20px rgb(255 120 70 / .45),0 0 160px 70px rgb(255 120 90 / .25)}
+/* Awan */
+.cloud{position:absolute;width:150px;height:46px;border-radius:46px;background:#FFFFFF;opacity:0;transition:opacity 1.2s;filter:drop-shadow(0 8px 12px rgb(30 60 140 / .18))}
+.cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+.cloud::before{width:66px;height:66px;left:22px;top:-34px}
+.cloud::after{width:52px;height:52px;left:72px;top:-24px}
+.cloud.c1{left:6%;top:16%}
+.cloud.c2{left:42%;top:8%;transform:scale(.7)}
+.cloud.c3{left:66%;top:30%;transform:scale(.85)}
+.cover[data-sky="siang"] .cloud{opacity:.92}
+.cover[data-sky="pagi"] .cloud{opacity:.55;background:#FFE7E0}
+.cover[data-sky="sore"] .cloud{opacity:.4;background:#FFC9B8}
+/* Siang: lampu meja padam, teks pendamping lebih terang */
+.cover:is([data-sky="siang"],[data-sky="pagi"]) .cv-cone{opacity:0;animation:none}
+.cover:is([data-sky="siang"],[data-sky="pagi"]) .cv-bulb{fill:#E9E2D0;filter:none;animation:none}
+.cover:not([data-sky="malam"]) .cover-lead,.cover:not([data-sky="malam"]) .cover-sub span{color:rgb(255 255 255 / .9)}
+.cover:not([data-sky="malam"]) .kicker{color:#FFF1C9}
+.cover:not([data-sky="malam"]) .stat{background:rgb(20 12 50 / .35);border-color:rgb(255 255 255 / .22)}
+.cover:not([data-sky="malam"]) :is(.cover-sub,.cover-lead,.kicker){text-shadow:0 1px 8px rgb(20 10 60 / .35)}
+.cover:not([data-sky="malam"]) .stat{background:rgb(20 12 50 / .5)}
+@media (prefers-reduced-motion:no-preference){
+  .cloud.c1{animation:cloudDrift 60s linear infinite alternate}
+  .cloud.c2{animation:cloudDrift 80s linear infinite alternate-reverse}
+  .cloud.c3{animation:cloudDrift 70s linear infinite alternate}
+  .moon::before{animation:sunSpin 40s linear infinite}
+}
+@keyframes cloudDrift{from{translate:-40px 0}to{translate:60px 0}}
+@keyframes sunSpin{to{rotate:360deg}}
+@media (max-width:640px){.cloud{width:100px;height:32px}.cloud::before{width:44px;height:44px;left:14px;top:-22px}.cloud::after{width:36px;height:36px;left:48px;top:-16px}
+  .cover[data-sky="pagi"] .moon,.cover[data-sky="sore"] .moon{bottom:auto;top:110px}}
+
+
+/* ================= KATA MUTIARA + TANDA TANGAN ================= */
+.cv-quote{position:relative;margin:clamp(34px,5vh,56px) 0 0;max-width:44ch;padding:4px 0 0 34px} /* jarak lega dari logo QCode */
+.cv-quote::before{content:"\201C";position:absolute;left:-4px;top:-18px;font:700 72px/1 'Fredoka',sans-serif;background:linear-gradient(180deg,#FFB86B,#FF6FAE);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cv-quote blockquote{margin:0;font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(19px,1.7vw,24px);line-height:1.4;color:#FFF6EE;text-wrap:pretty}
+.cv-sign{display:flex;flex-direction:column;align-items:flex-end;margin-top:8px;width:max-content;margin-left:auto}
+.sig-t{font-family:'Dancing Script',cursive;font-weight:700;font-size:38px;line-height:1;background:linear-gradient(90deg,#FFB86B,#FF6FAE 55%,#A78BFA);-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(-6deg);padding:0 6px 4px;filter:drop-shadow(0 2px 0 #4A1D5E) drop-shadow(0 0 6px rgb(26 13 58 / .35))}
+.sig-line{width:150px;height:22px;margin-top:-6px;filter:drop-shadow(0 1px 0 #4A1D5E)}
+.sig-line path{stroke-dasharray:200;stroke-dashoffset:0}
+@media (prefers-reduced-motion:no-preference){
+  .cv-quote blockquote.in{animation:qIn .9s cubic-bezier(.2,.8,.2,1) both}
+  .sig-line path{animation:sigDraw 2.2s .6s ease-out both}
+  .sig-t{animation:sigIn 1s .3s ease-out both}
+}
+@keyframes qIn{from{opacity:0;transform:translateY(8px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes sigDraw{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+@keyframes sigIn{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+
+/* ================= LAMPU HANYA MALAM ================= */
+.cv-lamp{transition:opacity .8s ease,visibility 0s}
+.cover:not([data-sky="malam"]) .cv-lamp{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility 0s .8s}
+.cover:not([data-sky="malam"]) .scene-txt{padding-left:clamp(0px,8vw,120px)}
+
+/* ================= KUPU-KUPU (pagi/siang/sore) ================= */
+.flyer.day .wing{top:12%;width:44px;height:44px}
+.flyer.day .fl-body .mq~.wing{top:26%}
+@media (prefers-reduced-motion:no-preference){
+  .flyer.day .wing.r{animation:bfR .34s ease-in-out infinite alternate}
+  .flyer.day .wing.l{animation:bfL .34s ease-in-out infinite alternate}
+}
+@keyframes bfR{from{transform:scaleX(1) rotate(-6deg)}to{transform:scaleX(.25) rotate(4deg)}}
+@keyframes bfL{from{transform:scaleX(1) rotate(6deg)}to{transform:scaleX(.25) rotate(-4deg)}}
+@media (max-width:640px){.cv-quote{padding-left:28px}.sig-t{font-size:32px}}
+
 /* ================= STUDIO POSTER ================= */
 .poster-btn .mi{width:15px;height:15px;display:inline-grid;place-items:center}
 dialog.wide{width:min(1060px,calc(100% - 32px))}
@@ -902,7 +992,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   </div></div>
 
   <!-- Langit malam (bintang + bulan) -->
-  <div class="sky" aria-hidden="true"><i class="stars s1"></i><i class="stars s2"></i><i class="moon" id="moon"></i></div>
+  <div class="sky" aria-hidden="true"><i class="sky-day"></i><i class="stars s1"></i><i class="stars s2"></i><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i><i class="moon" id="moon"></i></div>
   <div class="sky-fly" id="skyFly" aria-hidden="true"></div>
 
   <div class="gutter scene-g"><div class="inner scene">
@@ -929,10 +1019,14 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
 
     <div class="scene-txt">
       <div class="kicker">Project</div>
-      <h1 class="wm" aria-label="QCode"><button class="q-enter" id="btnRack" type="button" aria-label="QCode"><span class="ch qm" style="--i:0" aria-hidden="true"><svg viewBox="0 -18 128 146"><defs><linearGradient id="qGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient><linearGradient id="qHorn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF4D6D"/><stop offset="1" stop-color="#FFB86B"/></linearGradient><radialGradient id="qFace" cx=".5" cy=".4" r=".65"><stop offset="0" stop-color="#3A1C6E"/><stop offset="1" stop-color="#1A0D3A"/></radialGradient></defs><g class="q-body"><path class="q-horn l" d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="url(#qHorn)" stroke="#1A0D3A" stroke-width="3" stroke-linejoin="round"/><path class="q-horn r" d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="url(#qHorn)" stroke="#1A0D3A" stroke-width="3" stroke-linejoin="round"/><path d="M34 14 Q34 4 33 -1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity=".7" fill="none"/><circle cx="60" cy="67" r="47.5" fill="#3A0F4A"/><circle cx="60" cy="62" r="47.5" fill="#1A0D3A"/><circle cx="60" cy="62" r="33" fill="url(#qFace)"/><ellipse cx="50" cy="44" rx="13" ry="6" fill="#FFFFFF" opacity=".1" transform="rotate(-20 50 44)"/><circle class="q-ring" cx="60" cy="62" r="40" fill="none" stroke="url(#qGrad)" stroke-width="15" pathLength="100" stroke-dasharray="100"/><circle class="q-glint" cx="60" cy="62" r="40" fill="none" stroke="#FFFFFF" stroke-opacity=".65" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="7 93"/><path class="q-gloss" d="M27 52 A34 34 0 0 1 48 28" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/><circle cx="51" cy="25.5" r="2.6" fill="#FFFFFF" opacity=".8"/><g class="q-look"><g class="q-eyes"><ellipse cx="47" cy="58" rx="8" ry="10" fill="#FFFFFF"/><ellipse cx="73" cy="58" rx="8" ry="10" fill="#FFFFFF"/><circle cx="48.5" cy="60" r="4.6" fill="#1A0D3A"/><circle cx="74.5" cy="60" r="4.6" fill="#1A0D3A"/><circle cx="50.2" cy="57.6" r="1.7" fill="#FFFFFF"/><circle cx="76.2" cy="57.6" r="1.7" fill="#FFFFFF"/></g></g><ellipse cx="37" cy="71" rx="5" ry="3" fill="#FF6FAE" opacity=".65"/><ellipse cx="83" cy="71" rx="5" ry="3" fill="#FF6FAE" opacity=".65"/><g class="q-mouth"><path d="M52 71 Q60 83 68 71 Z" fill="#5B1033"/><path d="M55.5 75.2 Q60 80 64.5 75.2 Q60 77.2 55.5 75.2 Z" fill="#FF8FB1"/></g><g class="q-tail"><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#qGrad)" stroke-width="10" stroke-linecap="round"/><path d="M105 97 L121 105 L106 115 Q110 106 105 97 Z" fill="#FF6FAE"/></g><path class="q-spark" d="M100 -6 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 z" fill="#FFD36E"/></g></svg></span></button><span class="ch b cap" style="--i:1" aria-hidden="true">C</span><span class="ch b" style="--i:2" aria-hidden="true">o</span><span class="ch b" style="--i:3" aria-hidden="true">d</span><span class="ch b" style="--i:4" aria-hidden="true">e</span></h1>
-      <p class="cover-sub">Studio <span>Aplikasi Web</span></p>
-      <p class="cover-lead">Semua aplikasi web yang sudah kita bangun ada di sini. Tinggal klik, tidak perlu buka satu per satu.</p>
-      <div class="cover-stats" id="coverStats"></div>
+      <h1 class="wm" aria-label="QCode"><button class="q-enter" id="btnRack" type="button" aria-label="QCode"><span class="ch qm" style="--i:0" aria-hidden="true"><svg viewBox="0 -18 128 146"><defs><linearGradient id="qGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient><linearGradient id="qHorn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF4D6D"/><stop offset="1" stop-color="#FFB86B"/></linearGradient><radialGradient id="qFace" cx=".42" cy=".35" r=".75"><stop offset="0" stop-color="#FFF6EE"/><stop offset=".7" stop-color="#FFD3BE"/><stop offset="1" stop-color="#F2A98C"/></radialGradient></defs><g class="q-body"><path class="q-horn l" d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="url(#qHorn)" stroke="#4A1D5E" stroke-width="3" stroke-linejoin="round"/><path class="q-horn r" d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="url(#qHorn)" stroke="#4A1D5E" stroke-width="3" stroke-linejoin="round"/><path d="M34 14 Q34 4 33 -1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity=".7" fill="none"/><circle cx="60" cy="67" r="47.5" fill="#7A2C6E"/><circle cx="60" cy="62" r="47.5" fill="#4A1D5E"/><circle cx="60" cy="62" r="33" fill="url(#qFace)"/><ellipse cx="49" cy="45" rx="11" ry="5" fill="#FFFFFF" opacity=".7" transform="rotate(-22 49 45)"/><circle class="q-ring" cx="60" cy="62" r="40" fill="none" stroke="url(#qGrad)" stroke-width="15" pathLength="100" stroke-dasharray="100"/><circle class="q-glint" cx="60" cy="62" r="40" fill="none" stroke="#FFFFFF" stroke-opacity=".65" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="7 93"/><path class="q-gloss" d="M27 52 A34 34 0 0 1 48 28" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/><circle cx="51" cy="25.5" r="2.6" fill="#FFFFFF" opacity=".8"/><g class="q-look"><g class="q-eyes"><ellipse cx="47" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><ellipse cx="73" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><circle cx="49.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="75.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="45" cy="64.6" r="1.3" fill="#FFFFFF"/><circle cx="71" cy="64.6" r="1.3" fill="#FFFFFF"/></g></g><ellipse cx="38" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/><ellipse cx="82" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/><g class="q-mouth"><path d="M53.5 71 Q60 80 66.5 71 Z" fill="#C2335E" stroke="#7A1F45" stroke-width="1" stroke-linejoin="round"/><path d="M56.5 75.2 Q60 78.6 63.5 75.2 Q60 76.6 56.5 75.2 Z" fill="#FF9DBA"/></g><g class="q-tail"><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#qGrad)" stroke-width="10" stroke-linecap="round"/><path d="M105 97 L121 105 L106 115 Q110 106 105 97 Z" fill="#FF6FAE"/></g><path class="q-spark" d="M100 -6 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 z" fill="#FFD36E"/></g></svg></span></button><span class="ch b cap" style="--i:1" aria-hidden="true">C</span><span class="ch b" style="--i:2" aria-hidden="true">o</span><span class="ch b" style="--i:3" aria-hidden="true">d</span><span class="ch b" style="--i:4" aria-hidden="true">e</span></h1>
+      <figure class="cv-quote" aria-live="polite">
+        <blockquote id="cvQuote">Hal kecil yang dikerjakan dengan tekun akan jadi besar pada waktunya.</blockquote>
+        <figcaption class="cv-sign" aria-label="QCode">
+          <span class="sig-t">QCode</span>
+          <svg class="sig-line" viewBox="0 0 160 24" aria-hidden="true"><path d="M4 16 C30 6 60 22 90 12 S140 4 156 14" fill="none" stroke="url(#sigG)" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="sigG" x1="0" x2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs></svg>
+        </figcaption>
+      </figure>
     </div>
 
     <div class="scene-prop" aria-hidden="true">
@@ -957,7 +1051,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
 <div id="portal" hidden>
   <header class="bar gutter"><div class="inner">
     <button class="brand" id="btnHome" type="button" aria-label="Kembali ke sampul">
-      <svg class="mini-q" viewBox="0 -18 128 146" aria-hidden="true"><defs><linearGradient id="qGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs><path d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="#FF4D6D"/><path d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="#FF4D6D"/><circle cx="60" cy="62" r="33" fill="#2A1456"/><circle cx="60" cy="62" r="40" fill="none" stroke="url(#qGrad2)" stroke-width="16"/><g class="mini-eyes"><ellipse cx="47" cy="58" rx="8" ry="10" fill="#FFFFFF"/><ellipse cx="73" cy="58" rx="8" ry="10" fill="#FFFFFF"/><circle cx="48.5" cy="60" r="4.6" fill="#1A0D3A"/><circle cx="74.5" cy="60" r="4.6" fill="#1A0D3A"/></g><path d="M52 71 Q60 83 68 71 Z" fill="#5B1033"/><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#qGrad2)" stroke-width="11" stroke-linecap="round"/><path d="M105 97 L121 105 L106 115 Q110 106 105 97 Z" fill="#FF6FAE"/></svg>
+      <svg class="mini-q" viewBox="0 -18 128 146" aria-hidden="true"><defs><linearGradient id="qGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs><path d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="#FF4D6D"/><path d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="#FF4D6D"/><circle cx="60" cy="62" r="48" fill="#4A1D5E"/><circle cx="60" cy="62" r="33" fill="#FFE2D2"/><circle cx="60" cy="62" r="40" fill="none" stroke="url(#qGrad2)" stroke-width="16"/><g class="mini-eyes"><ellipse cx="47" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><ellipse cx="73" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><circle cx="49.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="75.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="45" cy="64.6" r="1.3" fill="#FFFFFF"/><circle cx="71" cy="64.6" r="1.3" fill="#FFFFFF"/></g><ellipse cx="38" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/><ellipse cx="82" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/><path d="M53.5 71 Q60 80 66.5 71 Z" fill="#C2335E" stroke="#7A1F45" stroke-width="1" stroke-linejoin="round"/><path d="M56.5 75.2 Q60 78.6 63.5 75.2 Q60 76.6 56.5 75.2 Z" fill="#FF9DBA"/><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#qGrad2)" stroke-width="11" stroke-linecap="round"/><path d="M105 97 L121 105 L106 115 Q110 106 105 97 Z" fill="#FF6FAE"/></svg>
       <span class="wm">Q<span class="b">Code</span></span><span class="q-tip" aria-hidden="true">Ke sampul</span>
     </button>
     <span class="spacer"></span>
@@ -986,6 +1080,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
 
   <main class="main gutter"><div class="inner">
     <div class="panel">
+      <div class="demo" id="demoNote" hidden>Mode pratinjau: data contoh, belum tersambung ke Google Sheets. PIN admin demo: 160116.</div>
       <div class="tools">
         <div class="search">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1321,14 +1416,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       ? { total: state.apps.length, live: count(x => x.status === 'live'), dev: count(x => x.status === 'dev'), plan: count(x => x.status === 'plan') }
       : (state.summary || { total: 0, live: 0, dev: 0, plan: 0 });
 
-    // Kartu statistik + bar proporsi (animasi tumbuh)
-    const total = sum.total || 1;
-    const items = [['all','Aplikasi', sum.total], ...[['live','Aktif'],['dev','Pengembangan'],['plan','Rencana']].map(([s, l]) => [s, l, sum[s]])];
-    $('#coverStats').replaceChildren(...items.map(([s, l, n], i) =>
-      h('div', {class:`stat ${s}`, style:`--i:${i}`},
-        numEl(n),
-        h('span', {class:'lbl'}, h('i', {class:'dot'}), l),
-        h('span', {class:'stat-bar'}, h('i', {style:`--w:${state.loading ? 0 : Math.round(n / total * 100)}%`})))));
+    void sum; // statistik tidak lagi ditampilkan di sampul (cukup kita yang tahu)
 
     if (animate) { state.counted = true; nums.forEach(([el, n]) => countUp(el, n)); }
     renderLaptop();
@@ -1336,6 +1424,34 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
 
   // Layar laptop di sampul: cover aplikasi (sudah login) atau ilustrasi per zona (belum login)
   let lapT, lapI = 0;
+  // Kata mutiara di sampul: mulai dari kata hari ini, berganti pelan tiap 12 detik
+  const WISDOM = [
+    'Hal kecil yang dikerjakan dengan tekun akan jadi besar pada waktunya.',
+    'Kerja keras hari ini adalah kemudahan untuk esok hari.',
+    'Rapi dalam mencatat, tenang dalam bekerja.',
+    'Jangan menunggu sempurna untuk memulai. Mulailah, lalu sempurnakan.',
+    'Setiap baris kode adalah langkah kecil menuju mimpi besar.',
+    'Ilmu yang dibagikan tidak berkurang, justru bertambah.',
+    'Sabar dalam proses, syukur dalam hasil.',
+    'Lelah hari ini, bangga esok hari.',
+    'Teliti sebelum yakin, yakin sebelum bertindak.',
+    'Bekerja dengan hati, hasilnya akan sampai ke hati.',
+    'Yang penting bukan seberapa cepat, tapi tidak berhenti.',
+    'Setiap masalah adalah kesempatan membuat solusi.',
+    'Keluarga adalah alasan, semangat adalah bahan bakarnya.',
+    'Mulai dari yang ada, kerjakan yang bisa, syukuri yang didapat.',
+    'Satu langkah setiap hari tetap membawa kita jauh.',
+    'Pekerjaan yang rapi adalah tanda hati yang tenang.',
+  ];
+  let wIdx = Math.floor(Date.now() / 864e5) % WISDOM.length;
+  const showWisdom = () => {
+    const el = $('#cvQuote'); if (!el) return;
+    el.classList.remove('in'); void el.offsetWidth;
+    el.textContent = WISDOM[wIdx]; el.classList.add('in');
+  };
+  showWisdom();
+  setInterval(() => { if (!$('#cover').hidden && !document.hidden) { wIdx = (wIdx + 1) % WISDOM.length; showWisdom(); } }, 12000);
+
   const renderLaptop = () => {
     const items = state.apps.length
       ? state.apps.map(a => ({ a, cap:`${a.code || ''} · ${a.name}` }))
@@ -1853,7 +1969,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   const MASCOT_WALK = '<svg class="mq" viewBox="-6 -26 136 156"><defs>'
     + '<linearGradient id="wkG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB86B"/><stop offset=".5" stop-color="#FF6FAE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>'
     + '<linearGradient id="wkH" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF4D6D"/><stop offset="1" stop-color="#FFB86B"/></linearGradient>'
-    + '<radialGradient id="wkF" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#4A2A8C"/><stop offset="1" stop-color="#22104A"/></radialGradient></defs>'
+    + '<radialGradient id="wkF" cx=".42" cy=".35" r=".75"><stop offset="0" stop-color="#FFF6EE"/><stop offset=".7" stop-color="#FFD3BE"/><stop offset="1" stop-color="#F2A98C"/></radialGradient></defs>'
     // tanduk bergaris tepi
     + '<path d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="url(#wkH)" stroke="#1A0D3A" stroke-width="3.5" stroke-linejoin="round"/>'
     + '<path d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="url(#wkH)" stroke="#1A0D3A" stroke-width="3.5" stroke-linejoin="round"/>'
@@ -1861,15 +1977,11 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
     // ekor
     + '<g class="tail"><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="#1A0D3A" stroke-width="17" stroke-linecap="round"/><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#wkG)" stroke-width="10" stroke-linecap="round"/><path d="M105 96 L122 105 L106 116 Q110 106 105 96 Z" fill="#FF6FAE" stroke="#1A0D3A" stroke-width="3" stroke-linejoin="round"/></g>'
     // cincin Q + wajah
-    + '<circle cx="60" cy="62" r="48.5" fill="#1A0D3A"/><circle cx="60" cy="62" r="40" fill="none" stroke="url(#wkG)" stroke-width="15"/>'
-    + '<circle cx="60" cy="62" r="32.5" fill="url(#wkF)"/>'
-    + '<path d="M38 41 Q46 36 53 41" fill="none" stroke="#FFB86B" stroke-width="3.2" stroke-linecap="round"/><path d="M67 41 Q74 36 82 41" fill="none" stroke="#FFB86B" stroke-width="3.2" stroke-linecap="round"/>'
-    + '<g class="eyes"><ellipse cx="46" cy="58" rx="9" ry="11" fill="#fff" stroke="#1A0D3A" stroke-width="1.5"/><ellipse cx="74" cy="58" rx="9" ry="11" fill="#fff" stroke="#1A0D3A" stroke-width="1.5"/>'
-    + '<circle cx="49" cy="60" r="5.6" fill="#1A0D3A"/><circle cx="77" cy="60" r="5.6" fill="#1A0D3A"/>'
-    + '<circle cx="51" cy="56.6" r="2.2" fill="#fff"/><circle cx="79" cy="56.6" r="2.2" fill="#fff"/><circle cx="47" cy="63" r="1" fill="#fff"/><circle cx="75" cy="63" r="1" fill="#fff"/></g>'
-    + '<ellipse cx="34" cy="72" rx="6" ry="3.6" fill="#FF6FAE" opacity=".75"/><ellipse cx="86" cy="72" rx="6" ry="3.6" fill="#FF6FAE" opacity=".75"/>'
-    + '<path d="M50 71 Q60 86 70 71 Z" fill="#5B1033" stroke="#1A0D3A" stroke-width="1.2" stroke-linejoin="round"/>'
-    + '<path d="M54.5 77 Q60 83 65.5 77 Q60 79.5 54.5 77 Z" fill="#FF8FB1"/><path d="M55 71.2 l2.2 3.4 2.2-3.4 z" fill="#fff"/>'
+    + '<circle cx="60" cy="62" r="48.5" fill="#4A1D5E"/><circle cx="60" cy="62" r="40" fill="none" stroke="url(#wkG)" stroke-width="15"/>'
+    + '<circle cx="60" cy="62" r="32.5" fill="url(#wkF)"/><ellipse cx="49" cy="45" rx="11" ry="5" fill="#fff" opacity=".7" transform="rotate(-22 49 45)"/>'
+    + '<g class="eyes"><ellipse cx="47" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><ellipse cx="73" cy="61" rx="6.4" ry="8.4" fill="#2B1640"/><circle cx="49.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="75.4" cy="57.4" r="2.7" fill="#FFFFFF"/><circle cx="45" cy="64.6" r="1.3" fill="#FFFFFF"/><circle cx="71" cy="64.6" r="1.3" fill="#FFFFFF"/></g>'
+    + '<ellipse cx="38" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/><ellipse cx="82" cy="72" rx="6" ry="3.6" fill="#FF7FA8" opacity=".7"/>'
+    + '<path d="M53.5 71 Q60 80 66.5 71 Z" fill="#C2335E" stroke="#7A1F45" stroke-width="1" stroke-linejoin="round"/><path d="M56.5 75.2 Q60 78.6 63.5 75.2 Q60 76.6 56.5 75.2 Z" fill="#FF9DBA"/>'
     + '</svg>';
   // Kaki: paha bergaris tepi + sepatu kets berwarna sesuai huruf (kaki belakang sedikit lebih gelap)
   const legSvg = (x, cls, inner, shoe) =>
@@ -1886,6 +1998,12 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
     // cakar kecil di pergelangan
     + '<path d="M30 4 L33 -3 L35 3" fill="#FFD36E" stroke="#0E0620" stroke-width="1.2" stroke-linejoin="round"/></svg>';
   const wings = `<span class="wing l" aria-hidden="true">${WING}</span><span class="wing r" aria-hidden="true">${WING}</span>`;
+  // Sayap kupu-kupu untuk pagi/siang/sore: dua lobus warna-warni dengan bintik
+  const BF = '<svg viewBox="0 0 50 50"><defs><linearGradient id="bfA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE066"/><stop offset=".55" stop-color="#FF8FB1"/><stop offset="1" stop-color="#A78BFA"/></linearGradient><linearGradient id="bfB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7CE7C8"/><stop offset="1" stop-color="#5AA8FF"/></linearGradient></defs>'
+    + '<path d="M2 22 C6 2 32 -5 46 7 C53 15 42 27 22 25 Z" fill="url(#bfA)" stroke="#4A1D5E" stroke-width="2" stroke-linejoin="round"/>'
+    + '<path d="M2 25 C15 26 31 31 31 42 C29 50 12 49 6 39 Z" fill="url(#bfB)" stroke="#4A1D5E" stroke-width="2" stroke-linejoin="round"/>'
+    + '<circle cx="33" cy="12" r="3.4" fill="#fff" opacity=".85"/><circle cx="24" cy="17" r="2" fill="#fff" opacity=".7"/><circle cx="18" cy="37" r="2.4" fill="#fff" opacity=".75"/></svg>';
+  const bfWings = `<span class="wing l" aria-hidden="true">${BF}</span><span class="wing r" aria-hidden="true">${BF}</span>`;
 
   // Kru terbang: satu huruf terbang sendirian melintasi langit (sering menuju bulan) sambil membawa kata-kata
   const LETTERS = [`${MASCOT_WALK}`, ...CREW.map(l =>
@@ -1911,8 +2029,10 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
     }
     qIdx = (qIdx + 1) % QUOTES.length; fIdx = (fIdx + 1) % LETTERS.length;
     const bubble = h('div', {class:'fl-bubble'}, QUOTES[qIdx]);
-    const body = h('div', {class:'wb fl-body'}); body.innerHTML = LETTERS[fIdx] + wings; // markup statis milik kita
-    const el = h('div', {class:'flyer'}, bubble, body);
+    // Malam = kelelawar; pagi/siang/sore = kupu-kupu
+    const day = $('#cover').dataset.sky !== 'malam';
+    const body = h('div', {class:'wb fl-body'}); body.innerHTML = LETTERS[fIdx] + (day ? bfWings : wings); // markup statis milik kita
+    const el = h('div', {class:`flyer${day ? ' day' : ''}`}, bubble, body);
     sky.append(el);
     const dur = rnd(9000, 11500);
     const anim = el.animate(frames, { duration:dur, easing:'ease-in-out', fill:'forwards' });
@@ -1992,15 +2112,17 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
     ctx.fillStyle = hg;
     ctx.fill(new Path2D('M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z'));
     ctx.fill(new Path2D('M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z'));
-    ctx.fillStyle = '#2A1456'; ctx.beginPath(); ctx.arc(60, 62, 33, 0, Math.PI * 2); ctx.fill();
+    const fg = ctx.createRadialGradient(52, 50, 2, 60, 62, 34); fg.addColorStop(0, '#FFF6EE'); fg.addColorStop(.7, '#FFD3BE'); fg.addColorStop(1, '#F2A98C');
+    ctx.fillStyle = '#4A1D5E'; ctx.beginPath(); ctx.arc(60, 62, 48, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = fg; ctx.beginPath(); ctx.arc(60, 62, 33, 0, Math.PI * 2); ctx.fill();
     ctx.strokeStyle = g; ctx.lineWidth = 15; ctx.beginPath(); ctx.arc(60, 62, 40, 0, Math.PI * 2); ctx.stroke();
     const ell = (cx, cy, rx, ry, c, a = 1) => { ctx.globalAlpha = a; ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; };
-    ell(47, 58, 8, 10, '#fff'); ell(73, 58, 8, 10, '#fff');
-    ell(48.5, 60, 4.6, 4.6, '#1A0D3A'); ell(74.5, 60, 4.6, 4.6, '#1A0D3A');
-    ell(50.2, 57.6, 1.7, 1.7, '#fff'); ell(76.2, 57.6, 1.7, 1.7, '#fff');
-    ell(37, 71, 5, 3, '#FF6FAE', .65); ell(83, 71, 5, 3, '#FF6FAE', .65);
-    ctx.fillStyle = '#5B1033'; ctx.fill(new Path2D('M52 71 Q60 83 68 71 Z'));
-    ctx.fillStyle = '#FF8FB1'; ctx.fill(new Path2D('M55.5 75.2 Q60 80 64.5 75.2 Q60 77.2 55.5 75.2 Z'));
+    // Wajah Mochi Peach: mata gelap berkilau, pipi merona, mulut tersenyum
+    ell(47, 61, 6.4, 8.4, '#2B1640'); ell(73, 61, 6.4, 8.4, '#2B1640');
+    ell(49.4, 57.4, 2.7, 2.7, '#fff'); ell(75.4, 57.4, 2.7, 2.7, '#fff'); ell(45, 64.6, 1.3, 1.3, '#fff'); ell(71, 64.6, 1.3, 1.3, '#fff');
+    ell(38, 72, 6, 3.6, '#FF7FA8', .7); ell(82, 72, 6, 3.6, '#FF7FA8', .7);
+    ctx.fillStyle = '#C2335E'; ctx.fill(new Path2D('M53.5 71 Q60 80 66.5 71 Z'));
+    ctx.fillStyle = '#FF9DBA'; ctx.fill(new Path2D('M56.5 75.2 Q60 78.6 63.5 75.2 Q60 76.6 56.5 75.2 Z'));
     ctx.lineWidth = 10; ctx.lineCap = 'round'; ctx.stroke(new Path2D('M84 86 C94 96 98 104 108 106'));
     ctx.fillStyle = '#FF6FAE'; ctx.fill(new Path2D('M105 97 L121 105 L106 115 Q110 106 105 97 Z'));
     ctx.fillStyle = '#FFD36E'; ctx.fill(new Path2D('M100 -6 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 z'));
@@ -2414,7 +2536,13 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   const tick = () => { const n = new Date();
     document.querySelectorAll('[data-clock-time]').forEach(el => el.textContent = `${fmtT.format(n)} WIB`);
     document.querySelectorAll('[data-clock-date]').forEach(el => el.textContent = fmtD.format(n)); };
-  tick(); setInterval(tick, 15000);
+  // Langit sampul mengikuti jam WIB: pagi 05–10, siang 10–15, sore 15–18, malam 18–05
+  const skyPhase = () => {
+    const hr = Number(new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jakarta', hour:'2-digit', hour12:false }).format(new Date()));
+    return hr >= 5 && hr < 10 ? 'pagi' : hr >= 10 && hr < 15 ? 'siang' : hr >= 15 && hr < 18 ? 'sore' : 'malam';
+  };
+  const setSky = () => { const p = new URLSearchParams(location.search).get('sky'); $('#cover').dataset.sky = /^(pagi|siang|sore|malam)$/.test(p || '') ? p : skyPhase(); };
+  tick(); setSky(); setInterval(() => { tick(); setSky(); }, 15000);
 
   /* ===== 10b. HP DALAM MODE "SITUS DESKTOP" ===== */
   // Browser HP yang memakai "Situs desktop" melapor lebar ±980px, jadi tampilan HP tidak aktif.
@@ -2451,5 +2579,3 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   window.addEventListener('pageshow', (e) => { if (e.persisted) showCover(); });
 })();
 </script>
-
-</body></html>
