@@ -890,8 +890,8 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 .cover:is([data-sky="pagi"],[data-sky="siang"],[data-sky="sore"]) .moon::after{opacity:0}
 .cover:is([data-sky="pagi"],[data-sky="siang"],[data-sky="sore"]) .moon::before{opacity:1}
 .cover[data-sky="siang"] .moon{background:radial-gradient(circle at 40% 38%,#FFFBE0,#FFE066 55%,#FFC21A);box-shadow:0 0 50px 16px rgb(255 214 70 / .45),0 0 140px 60px rgb(255 230 120 / .25)}
-.cover[data-sky="pagi"] .moon{top:auto;bottom:38%;background:radial-gradient(circle at 40% 38%,#FFF4D6,#FFC46B 55%,#FF9A3C);box-shadow:0 0 50px 18px rgb(255 160 80 / .45),0 0 150px 70px rgb(255 180 110 / .25)}
-.cover[data-sky="sore"] .moon{top:auto;bottom:30%;width:86px;height:86px;background:radial-gradient(circle at 40% 38%,#FFE3B8,#FF8A4C 55%,#E2504F);box-shadow:0 0 60px 20px rgb(255 120 70 / .45),0 0 160px 70px rgb(255 120 90 / .25)}
+.cover[data-sky="pagi"] .moon{top:clamp(104px,19vh,150px);bottom:auto;background:radial-gradient(circle at 40% 38%,#FFF4D6,#FFC46B 55%,#FF9A3C);box-shadow:0 0 50px 18px rgb(255 160 80 / .45),0 0 150px 70px rgb(255 180 110 / .25)}
+.cover[data-sky="sore"] .moon{top:clamp(96px,18vh,160px);bottom:auto;width:86px;height:86px;background:radial-gradient(circle at 40% 38%,#FFE3B8,#FF8A4C 55%,#E2504F);box-shadow:0 0 60px 20px rgb(255 120 70 / .45),0 0 160px 70px rgb(255 120 90 / .25)}
 /* Awan */
 .cloud{position:absolute;width:150px;height:46px;border-radius:46px;background:#FFFFFF;opacity:0;transition:opacity 1.2s;filter:drop-shadow(0 8px 12px rgb(30 60 140 / .18))}
 .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
@@ -920,7 +920,7 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 @keyframes cloudDrift{from{translate:-40px 0}to{translate:60px 0}}
 @keyframes sunSpin{to{rotate:360deg}}
 @media (max-width:640px){.cloud{width:100px;height:32px}.cloud::before{width:44px;height:44px;left:14px;top:-22px}.cloud::after{width:36px;height:36px;left:48px;top:-16px}
-  .cover[data-sky="pagi"] .moon,.cover[data-sky="sore"] .moon{bottom:auto;top:110px}}
+  .cover[data-sky="pagi"] .moon,.cover[data-sky="sore"] .moon{bottom:auto;top:96px}}
 
 
 /* ================= KATA MUTIARA + TANDA TANGAN ================= */
