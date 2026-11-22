@@ -1129,15 +1129,19 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 
 /* ================= HACKER BERHOODIE DI BALIK LAPTOP ================= */
 .laptop{position:relative}
-.hacker{position:absolute;left:50%;bottom:62px;width:120%;max-width:440px;translate:-50% 0;z-index:0;filter:drop-shadow(0 0 30px rgb(80 200 255 / .18))}
+.hk-wrap{position:absolute;left:50%;bottom:62px;width:120%;max-width:440px;translate:-50% 0;z-index:0}
+.hacker{display:block;width:100%;height:auto;filter:drop-shadow(0 0 34px rgb(60 255 140 / .22))}
+.hk-say{position:absolute;left:50%;bottom:calc(100% - 8px);translate:-20% 0;width:max-content;max-width:230px;margin:0;padding:8px 13px;border-radius:14px;background:#fff;color:#0B1A10;border:2px solid #0B1A10;font:700 13.5px/1.3 var(--f-sans,inherit);box-shadow:0 4px 0 rgb(0 0 0 / .25);transition:opacity .35s,transform .35s}
+.hk-say::after{content:"";position:absolute;left:22%;bottom:-8px;width:12px;height:12px;background:#fff;border-right:2px solid #0B1A10;border-bottom:2px solid #0B1A10;rotate:45deg}
+.hk-say.out{opacity:0;transform:translateY(6px) scale(.9)}
 .lap-screen{z-index:1}
 .lap-base{z-index:2}
-.hk-hands{position:absolute;left:50%;bottom:-8px;width:68%;translate:-50% 0;z-index:3}
+.hk-fists{position:absolute;left:50%;bottom:-12px;width:118%;overflow:visible;translate:-50% 0;z-index:3}
 .lap-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgb(79 227 255 / .06),transparent 40%)}
 @media (prefers-reduced-motion:no-preference){
-  .hacker{animation:hkBreath 4s ease-in-out infinite}
+  .hk-wrap{animation:hkBreath 4s ease-in-out infinite}
   .hk-glass{animation:hkGlow 2.6s ease-in-out infinite alternate}
-  .hk-hands{animation:hkType .28s steps(2) infinite}
+  .hk-fists{animation:hkType .28s steps(2) infinite}
 }
 @keyframes hkBreath{0%,100%{translate:-50% 0}50%{translate:-50% -3px}}
 @keyframes hkGlow{from{opacity:.75}to{opacity:1}}
@@ -1220,31 +1224,32 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       <!-- Laptop: layar menampilkan aplikasi bergantian -->
       <div class="laptop">
         <!-- Sosok hacker berhoodie di balik laptop -->
+        <div class="hk-wrap"><p class="hk-say" id="hkSay">Hoaam... ngantuk</p>
         <svg class="hacker" viewBox="0 0 420 300" aria-hidden="true">
           <defs>
-            <linearGradient id="hkBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A2F5C"/><stop offset="1" stop-color="#1B1530"/></linearGradient>
-            <radialGradient id="hkFace" cx=".5" cy=".75" r=".7"><stop offset="0" stop-color="#4FE3FF" stop-opacity=".55"/><stop offset=".55" stop-color="#1F2A55" stop-opacity=".9"/><stop offset="1" stop-color="#0A0716"/></radialGradient>
-            <linearGradient id="hkRim" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8FE9FF" stop-opacity=".9"/><stop offset="1" stop-color="#8FE9FF" stop-opacity="0"/></linearGradient>
+            <linearGradient id="hkBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22222A"/><stop offset="1" stop-color="#060608"/></linearGradient>
+            <radialGradient id="hkFace" cx=".5" cy=".75" r=".7"><stop offset="0" stop-color="#39FF88" stop-opacity=".5"/><stop offset=".55" stop-color="#0F2A1C" stop-opacity=".92"/><stop offset="1" stop-color="#030605"/></radialGradient>
+            <linearGradient id="hkRim" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6CFF9E" stop-opacity=".9"/><stop offset="1" stop-color="#6CFF9E" stop-opacity="0"/></linearGradient>
           </defs>
           <!-- bahu & badan hoodie -->
           <path d="M18 300 C22 232 70 198 140 186 L280 186 C350 198 398 232 402 300 Z" fill="url(#hkBody)"/>
-          <path d="M150 196 Q210 236 270 196" fill="none" stroke="#130F22" stroke-width="5" stroke-linecap="round"/>
-          <path d="M186 214 L180 262 M234 214 L240 262" stroke="#C9BFEA" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-          <circle cx="180" cy="266" r="4" fill="#C9BFEA" opacity=".6"/><circle cx="240" cy="266" r="4" fill="#C9BFEA" opacity=".6"/>
+          <path d="M150 196 Q210 236 270 196" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+          <path d="M186 214 L180 262 M234 214 L240 262" stroke="#8A8A96" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+          <circle cx="180" cy="266" r="4" fill="#8A8A96"/><circle cx="240" cy="266" r="4" fill="#8A8A96"/>
           <!-- tudung -->
           <path class="hk-hood" d="M210 16 C138 16 104 76 108 140 C110 176 128 200 150 208 L270 208 C292 200 310 176 312 140 C316 76 282 16 210 16 Z" fill="url(#hkBody)"/>
-          <path d="M210 16 C160 18 130 56 124 104" fill="none" stroke="#5B4C8A" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+          <path d="M210 16 C160 18 130 56 124 104" fill="none" stroke="#3A3A44" stroke-width="5" stroke-linecap="round" opacity=".9"/>
           <!-- wajah gelap diterangi layar -->
           <path d="M210 60 C168 60 146 96 146 136 C146 170 172 196 210 196 C248 196 274 170 274 136 C274 96 252 60 210 60 Z" fill="url(#hkFace)"/>
           <!-- kacamata memantulkan kode di layar -->
-          <g class="hk-glass"><rect x="164" y="122" width="34" height="18" rx="6" fill="#7FF0FF" opacity=".85"/><rect x="222" y="122" width="34" height="18" rx="6" fill="#7FF0FF" opacity=".85"/>
+          <g class="hk-glass"><rect x="164" y="122" width="34" height="18" rx="6" fill="#7CFFA8" opacity=".9"/><rect x="222" y="122" width="34" height="18" rx="6" fill="#7CFFA8" opacity=".9"/>
             <path d="M198 130 H222" stroke="#0A0716" stroke-width="3"/>
-            <path d="M168 128 h14 M168 133 h20 M226 128 h18 M226 133 h12" stroke="#0A3A55" stroke-width="2" stroke-linecap="round"/></g>
-          <path d="M196 168 Q210 174 224 168" fill="none" stroke="#5FD7F0" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+            <path d="M168 128 h14 M168 133 h20 M226 128 h18 M226 133 h12" stroke="#0A3A1E" stroke-width="2" stroke-linecap="round"/></g>
+          <path d="M196 168 Q210 174 224 168" fill="none" stroke="#5FF09A" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
           <!-- cahaya layar di tepi tudung -->
           <path d="M112 150 C116 182 134 202 152 208 M308 150 C304 182 286 202 268 208" fill="none" stroke="url(#hkRim)" stroke-width="4" stroke-linecap="round"/>
-        </svg>
-        <svg class="hk-hands" viewBox="0 0 260 40" aria-hidden="true"><g fill="#2A2245" stroke="#130F22" stroke-width="2"><rect x="22" y="6" width="70" height="26" rx="13"/><rect x="168" y="6" width="70" height="26" rx="13"/></g><g fill="#E9B98F"><ellipse cx="96" cy="20" rx="12" ry="9"/><ellipse cx="164" cy="20" rx="12" ry="9"/></g></svg>
+        </svg></div>
+        <svg class="hk-fists" viewBox="0 0 500 124" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M60 6 C54 46 62 80 92 94 C124 104 160 104 196 100" stroke="#000" stroke-width="40"/><path d="M440 6 C446 46 438 80 408 94 C376 104 340 104 304 100" stroke="#000" stroke-width="40"/><path d="M60 6 C54 46 62 80 92 94 C124 104 160 104 196 100" stroke="#1B1B23" stroke-width="34"/><path d="M440 6 C446 46 438 80 408 94 C376 104 340 104 304 100" stroke="#1B1B23" stroke-width="34"/><path d="M48 14 C44 46 52 74 78 88" stroke="#3E3E4C" stroke-width="3" opacity=".9"/><path d="M452 14 C456 46 448 74 422 88" stroke="#3E3E4C" stroke-width="3" opacity=".9"/><path d="M100 92 C126 99 154 99 180 96 M400 92 C374 99 346 99 320 96" stroke="#6CFF9E" stroke-width="2.5" opacity=".35"/></g><rect x="182" y="86" width="22" height="28" rx="8" fill="#2A2A34" stroke="#000" stroke-width="2.5"/><rect x="296" y="86" width="22" height="28" rx="8" fill="#2A2A34" stroke="#000" stroke-width="2.5"/><ellipse cx="220" cy="102" rx="17" ry="10" fill="#C9A27E" stroke="#5A3E28" stroke-width="1.5"/><ellipse cx="280" cy="102" rx="17" ry="10" fill="#C9A27E" stroke="#5A3E28" stroke-width="1.5"/><ellipse cx="222" cy="98" rx="9" ry="3" fill="#6CFF9E" opacity=".45"/><ellipse cx="278" cy="98" rx="9" ry="3" fill="#6CFF9E" opacity=".45"/></svg>
         <div class="lap-screen"><div class="lap-slides" id="lapSlides"></div><span class="lap-cap" id="lapCap"></span></div>
         <div class="lap-base"><i></i></div>
       </div>
@@ -1665,6 +1670,16 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   };
   showWisdom();
   setInterval(() => { if (!$('#cover').hidden && !document.hidden) { wIdx = (wIdx + 1) % WISDOM.length; showWisdom(); } }, 12000);
+
+  // Celetukan si hacker di atas kepala, berganti tiap 7 detik
+  const HK_SAY = ['Hoaam... ngantuk', 'Zzz... eh, belum selesai!', 'Kopi mana kopi?', 'Bentar lagi deploy...', 'Satu bug lagi, janji!',
+    'Kok jalan? Jangan disentuh!', 'Lapar... pesan pempek ah', 'Error lagi? Santai.', 'Ctrl+S dulu, aman.', 'Lembur dikit, demi kamu.'];
+  let hkI = 0;
+  setInterval(() => {
+    const el = $('#hkSay'); if (!el || $('#cover').hidden || document.hidden) return;
+    el.classList.add('out');
+    setTimeout(() => { hkI = (hkI + 1) % HK_SAY.length; el.textContent = HK_SAY[hkI]; el.classList.remove('out'); }, 350);
+  }, 7000);
 
   const renderLaptop = () => {
     const items = state.apps.length
