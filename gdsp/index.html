@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCode · Dokumen GDSP</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%20-18%20128%20146%22%20aria-label%3D%22QCode%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22qG%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23e2c27f%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23c9a25a%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239aa3ad%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d%3D%22M37%2030%20C30%2020%2028%208%2032%20-6%20C38%206%2045%2015%2053%2021%20Z%22%20fill%3D%22%23b0503f%22/%3E%3Cpath%20d%3D%22M83%2030%20C90%2020%2092%208%2088%20-6%20C82%206%2075%2015%2067%2021%20Z%22%20fill%3D%22%23b0503f%22/%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2262%22%20r%3D%2233%22%20fill%3D%22%233d434c%22/%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2262%22%20r%3D%2240%22%20fill%3D%22none%22%20stroke%3D%22url%28%23qG%29%22%20stroke-width%3D%2215%22/%3E%3Cellipse%20cx%3D%2247%22%20cy%3D%2258%22%20rx%3D%228%22%20ry%3D%2210%22%20fill%3D%22%23fff%22/%3E%3Cellipse%20cx%3D%2273%22%20cy%3D%2258%22%20rx%3D%228%22%20ry%3D%2210%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2248.5%22%20cy%3D%2260%22%20r%3D%224.6%22%20fill%3D%22%231d2025%22/%3E%3Ccircle%20cx%3D%2274.5%22%20cy%3D%2260%22%20r%3D%224.6%22%20fill%3D%22%231d2025%22/%3E%3Cpath%20d%3D%22M52%2071%20Q60%2083%2068%2071%20Z%22%20fill%3D%22%235b2a24%22/%3E%3Cpath%20d%3D%22M84%2086%20C94%2096%2098%20104%20108%20106%22%20fill%3D%22none%22%20stroke%3D%22url%28%23qG%29%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M105%2097%20L121%20105%20L106%20115%20Q110%20106%20105%2097%20Z%22%20fill%3D%22%23c9a25a%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<style>
+/* ═══════════════ Tema ═══════════════ */
+/* Palet abu-abu grafit (tanpa neon) */
+:root{
+  --navy:#2b2f36; --navy-2:#3d434c; --blue:#454c57; --blue-50:#eceef1;
+  --gold:#c9a25a; --gold-50:#f6efe2;
+  --green:#3f6b4f; --green-50:#e8f0eb; --amber:#a8741f; --amber-50:#f7efe0;
+  --red:#a23b3b; --red-50:#f6e6e6; --violet:#5a5f6b; --violet-50:#eceef1;
+  --bg:#f1f2f4; --card:#fff; --line:#e1e4e8; --text:#1f2329; --muted:#6b727c;
+  --radius:12px; --shadow:0 1px 2px rgba(31,35,41,.06),0 4px 14px rgba(31,35,41,.07);
+  --sb-bg:#1d2025; --sb-bg2:#2a2e35; --sb-text:#c9cdd3; --sb-muted:#868d97;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+button,input,select{font:inherit}
+a{color:var(--blue)}
+
+/* ═══════════════ Layout: sidebar + konten ═══════════════ */
+.app{display:flex;min-height:100vh}
+.sidebar{--sbw:264px;width:var(--sbw);background:linear-gradient(180deg,var(--sb-bg2) 0%,var(--sb-bg) 100%);color:var(--sb-text);display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;z-index:40;transition:width .25s ease,transform .25s ease;border-right:1px solid rgba(255,255,255,.04)}
+.brand{display:flex;align-items:center;gap:12px;padding:18px 16px;min-height:78px;position:relative}
+.brand::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:1px;background:rgba(255,255,255,.07)}
+.brand .logo{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;flex:none}
+.brand .logo .qlogo{width:34px;height:38px}
+.brand .bt{min-width:0;white-space:nowrap;overflow:hidden}
+.brand b{display:block;color:#fff;font-size:15px;letter-spacing:.2px}
+.brand small{color:var(--sb-muted);font-size:12px}
+.collapse-btn{margin-left:auto;flex:none;width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--sb-text);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.collapse-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.collapse-btn svg{width:16px;height:16px;transition:transform .25s}
+.nav{padding:10px 12px;flex:1;overflow-y:auto;overflow-x:hidden}
+.nav .sec{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sb-muted);padding:18px 12px 8px;white-space:nowrap;font-weight:600}
+.nav a{position:relative;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--sb-text);text-decoration:none;cursor:pointer;margin-bottom:2px;white-space:nowrap;transition:background .15s,color .15s;font-weight:500}
+.nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav a.active{background:rgba(255,255,255,.09);color:#fff}
+.nav a.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:4px;border-radius:0 4px 4px 0;background:var(--gold)}
+.nav a.active svg{color:var(--gold)}
+.nav .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.04);transition:background .15s}
+.nav a.active .ic{background:rgba(201,162,90,.16)}
+.nav svg{width:19px;height:19px;flex:none}
+.nav .lbl{overflow:hidden;text-overflow:ellipsis}
+.nav .cnt{margin-left:auto;background:var(--red);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:1px 7px}
+.side-foot{margin:12px;padding:12px;border-radius:11px;background:rgba(255,255,255,.05);font-size:12px;color:var(--sb-text);display:flex;align-items:center;gap:10px;white-space:nowrap;overflow:hidden}
+.side-foot .av{width:32px;height:32px;border-radius:50%;background:var(--navy-2);color:#fff;display:grid;place-items:center;font-weight:700;flex:none;position:relative;border:1px solid rgba(255,255,255,.12)}
+.side-foot .dot{position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#3fa06f;border:2px solid var(--sb-bg)}
+.side-foot.demo .dot{background:var(--gold)}
+.side-foot .ft b{color:#fff;font-weight:600}
+.side-foot .ft small{display:block;color:var(--sb-muted);font-size:11px}
+/* mode kecil (ikon saja) */
+.app.mini .sidebar{--sbw:80px}
+.app.mini .brand .bt,.app.mini .nav .lbl,.app.mini .side-foot .ft{display:none}
+.app.mini .brand{flex-direction:column;padding:14px 8px;gap:10px}
+.app.mini .collapse-btn{margin:0}
+.app.mini .collapse-btn svg{transform:rotate(180deg)}
+.app.mini .nav a{justify-content:center;padding:6px 0}
+.app.mini .nav .cnt{position:absolute;top:2px;right:8px;padding:0 5px;font-size:10px}
+.app.mini .nav .sec{height:1px;padding:0;margin:12px 14px;background:rgba(255,255,255,.08);font-size:0}
+.app.mini .side-foot{justify-content:center;margin:12px 10px;padding:10px 0}
+/* tooltip nama menu saat sidebar kecil (elemen fixed, tidak terpotong) */
+.sb-tip{position:fixed;z-index:80;background:#1d2025;color:#fff;font-size:12.5px;font-weight:500;padding:6px 10px;border-radius:7px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.25);pointer-events:none;opacity:0;transform:translateY(-50%);transition:opacity .12s}
+.sb-tip.show{opacity:1}
+.app.mini .brand::after{display:none}
+.main{flex:1;margin-left:264px;min-width:0;transition:margin-left .25s ease}
+.app.mini .main{margin-left:80px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(241,242,244,.92);backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;padding:14px 26px;border-bottom:1px solid var(--line)}
+.topbar h1{font-size:18px;margin:0}
+.topbar .sub{color:var(--muted);font-size:12.5px}
+.menu-btn{display:none;border:0;background:#fff;border-radius:9px;width:38px;height:38px;box-shadow:var(--shadow);cursor:pointer}
+.content{padding:22px 26px 60px;max-width:1200px}
+.backdrop{display:none}
+@media (max-width:900px){
+  .sidebar,.app.mini .sidebar{--sbw:264px;transform:translateX(-100%)}
+  .sidebar.open,.app.mini .sidebar.open{transform:none}
+  .main,.app.mini .main{margin-left:0}
+  .app.mini .brand .bt,.app.mini .nav .lbl,.app.mini .side-foot .ft{display:revert}
+  .app.mini .nav .sec{height:auto;padding:18px 12px 8px;margin:0;background:none;font-size:10.5px}
+  .app.mini .side-foot{justify-content:flex-start;margin:12px;padding:12px}
+  .app.mini .nav a{justify-content:flex-start;padding:10px 12px}
+  .app.mini .brand{flex-direction:row}
+  .collapse-btn{display:none}
+  .menu-btn{display:grid;place-items:center}
+  .backdrop.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:30}
+  .content{padding:16px 14px 60px}
+  .topbar{padding:12px 14px}
+}
+
+/* ═══════════════ Komponen ═══════════════ */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.card h3{margin:0 0 12px;font-size:15px}
+.card-title{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card-title h3{margin:0}
+.step-no{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)}
+.span2{grid-column:span 2}
+@media (max-width:1000px){.g4{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:1fr} .span2{grid-column:auto}}
+@media (max-width:600px){.g2,.g4{grid-template-columns:1fr} #kpis{grid-template-columns:1fr 1fr;gap:10px} #kpis .card{padding:12px;flex-direction:column;align-items:flex-start;gap:8px} #kpis .v{font-size:18px} #todayLabel{display:none} .stickybar .btn.ghost{display:none} .tbl td,.tbl th{padding:8px 6px;font-size:12.5px} .tbl td{white-space:nowrap}}
+.kpi{display:flex;gap:14px;align-items:center}
+.kpi .ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;flex:none}
+.kpi .ic svg{width:22px;height:22px}
+.kpi .v{font-size:22px;font-weight:700;line-height:1.2}
+.kpi .l{color:var(--muted);font-size:12.5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600;background:var(--blue);color:#fff;white-space:nowrap;text-decoration:none;box-shadow:0 2px 6px rgba(69,76,87,.25)}
+.btn:not(.ghost):hover{filter:brightness(1.08)}
+.btn:hover{filter:brightness(1.07)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue)}
+.btn.green{background:var(--green);box-shadow:0 2px 6px rgba(63,107,79,.25)}
+.btn.navy{background:var(--navy);box-shadow:0 2px 6px rgba(31,35,41,.3)}
+.btn.sm{padding:6px 10px;font-size:12.5px;border-radius:7px}
+.btn svg{width:16px;height:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12.5px;color:var(--muted);font-weight:500}
+.input,select.input{border:1px solid var(--line);border-radius:9px;padding:9px 12px;background:#fff;width:100%}
+.input:focus{outline:2px solid var(--blue-50);border-color:var(--blue)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.b-blue{background:var(--blue-50);color:var(--blue)} .b-green{background:var(--green-50);color:var(--green)} .b-amber{background:var(--amber-50);color:var(--amber)} .b-red{background:var(--red-50);color:var(--red)} .b-grey{background:#eceef1;color:var(--muted)}
+table.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:hover td{background:#fafbfc}
+.table-wrap{overflow:auto}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.hint{background:var(--blue-50);color:#3d434c;border-radius:10px;padding:11px 14px;font-size:13px}
+.page{display:none}
+.page.active{display:block}
+
+/* ═══════════════ Dashboard ═══════════════ */
+.todo{display:flex;flex-direction:column;gap:8px}
+.todo .it{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:#fafbfc;border:1px solid var(--line)}
+.todo .it .dot{width:9px;height:9px;border-radius:50%;flex:none}
+.todo .it b{white-space:nowrap}
+.allgood{display:flex;align-items:center;gap:12px;padding:14px;border-radius:10px;background:var(--green-50);color:var(--green);font-weight:600}
+.chart{display:flex;align-items:flex-end;gap:12px;height:200px;padding-top:18px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;height:100%;justify-content:flex-end}
+.chart .stack{width:100%;max-width:48px;display:flex;flex-direction:column-reverse;border-radius:7px 7px 3px 3px;overflow:hidden;min-height:2px}
+.chart .stack i{display:block;width:100%}
+.chart small{font-size:11px;color:var(--muted);white-space:nowrap}
+.chart .val{font-size:11px;font-weight:600;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.hbar{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;margin-bottom:10px;font-size:12.5px}
+.hbar .track{height:10px;background:#e9ecef;border-radius:99px;overflow:hidden}
+.hbar .track i{display:block;height:100%;border-radius:99px}
+.hbar .num{text-align:right;font-weight:600}
+.tg{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 11px;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted)}
+.tg.on{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ═══════════════ Dokumentasi Timbangan ═══════════════ */
+.xl-sum{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:12px 14px;background:var(--green-50);border-radius:10px;color:#13603d}
+.tray{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;margin-top:12px}
+.tray .tp{position:relative;flex:none;width:96px;cursor:pointer;border-radius:9px;border:2px solid transparent;background:#f0f2f4;padding:3px}
+.tray .tp img{width:100%;height:128px;object-fit:cover;border-radius:6px;display:block}
+.tray .tp.sel{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-50)}
+.tray .tp.used img{opacity:.45}
+.tray .tp .ok{position:absolute;left:6px;bottom:7px;background:var(--green);color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:1px 6px}
+.tray .tp .zm,.tray .tp .rm{position:absolute;top:6px;width:24px;height:24px;border-radius:6px;border:0;background:rgba(29,32,37,.75);color:#fff;cursor:pointer;display:grid;place-items:center}
+.tray .tp .zm{right:34px} .tray .tp .rm{right:6px}
+.tray .tp svg{width:13px;height:13px}
+.pick-banner{display:none;margin-top:10px}
+.pick-banner.show{display:block}
+.sec-card{border:1px solid var(--line);border-radius:12px;margin-bottom:14px;background:#fff;overflow:hidden}
+.sec-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#f7f8f9;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sec-head b{font-size:14px}
+.sec-total{margin-left:auto;font-weight:700;color:var(--navy)}
+.weigh{display:grid;grid-template-columns:36px 1fr 1fr 150px 40px;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px dashed var(--line)}
+.weigh:last-child{border-bottom:0}
+.weigh .no{font-weight:700;color:var(--muted);text-align:center}
+@media (max-width:700px){
+  .weigh{grid-template-columns:1fr 1fr;}
+  .weigh .no{grid-column:1/-1;text-align:left}
+  .weigh .kgbox{grid-column:1/2}
+}
+.slot{position:relative;aspect-ratio:3/4;width:100%;max-width:150px;margin:0 auto;border:2px dashed #cdd2d8;border-radius:10px;display:grid;place-items:center;cursor:pointer;background:#fafbfc;overflow:hidden;color:var(--muted);font-size:12px;text-align:center}
+.slot:hover{border-color:var(--blue)}
+.picking .slot{border-color:var(--blue);background:var(--blue-50);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 4px rgba(69,76,87,.18)}}
+.slot .ph{display:flex;flex-direction:column;align-items:center;padding:8px}
+.slot .ph svg{width:30px;height:30px;margin-bottom:6px;color:#a7aeb7}
+.slot img{width:100%;height:100%;object-fit:cover}
+.slot .tools{position:absolute;left:0;right:0;bottom:6px;display:flex;gap:4px;justify-content:center}
+.slot .tools button{width:27px;height:27px;border-radius:7px;border:0;background:rgba(29,32,37,.78);color:#fff;cursor:pointer;display:grid;place-items:center}
+.slot .tools svg{width:14px;height:14px}
+.slot .cap{position:absolute;left:6px;top:6px;background:rgba(29,32,37,.75);color:#fff;font-size:10.5px;padding:2px 7px;border-radius:6px}
+.kgbox .input{font-size:16px;font-weight:600;text-align:right}
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--muted)}
+.icon-btn:hover{color:var(--red);border-color:var(--red)}
+.icon-btn svg{width:16px;height:16px}
+
+/* ═══════════════ Rapikan Scan ═══════════════ */
+.drop{border:2px dashed #c3c9d0;border-radius:12px;padding:26px;text-align:center;background:#fafbfc;cursor:pointer}
+.drop.over{border-color:var(--blue);background:var(--blue-50)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:16px}
+.thumb{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;position:relative}
+.thumb canvas{width:100%;height:190px;object-fit:contain;background:#f0f2f4;border-radius:6px;display:block}
+.thumb .n{position:absolute;left:12px;top:12px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px}
+.thumb .acts{display:flex;justify-content:space-between;margin-top:7px}
+.thumb .acts button{width:30px;height:28px;border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer;display:grid;place-items:center}
+.thumb .acts svg{width:14px;height:14px}
+.thumb .src{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px}
+
+/* ═══════════════ Overlay, modal, toast, hasil ═══════════════ */
+.overlay{position:fixed;inset:0;background:rgba(29,32,37,.45);display:none;place-items:center;z-index:100}
+.overlay.show{display:grid}
+.overlay .box{background:#fff;border-radius:14px;padding:22px 24px;width:min(380px,90vw);text-align:center}
+.progress{height:8px;background:#e7eaee;border-radius:99px;overflow:hidden;margin-top:14px}
+.progress i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.spin{width:34px;height:34px;border:4px solid #dde1e6;border-top-color:var(--blue);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.modal{position:fixed;inset:0;background:rgba(29,32,37,.7);display:none;z-index:90;align-items:center;justify-content:center;padding:16px}
+.modal.show{display:flex}
+.modal .mbox{background:#fff;border-radius:14px;padding:16px;max-width:min(760px,96vw);width:100%;max-height:96vh;display:flex;flex-direction:column;gap:12px}
+.crop-wrap{position:relative;align-self:center;touch-action:none;user-select:none;line-height:0;overflow:hidden;border-radius:6px}
+.crop-wrap canvas{max-width:100%;display:block;border-radius:6px}
+.crop-rect{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.5);cursor:move}
+.crop-rect .hd{position:absolute;right:-9px;bottom:-9px;width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;cursor:nwse-resize}
+.crop-rect::after{content:"";position:absolute;inset:33.3% 0;border-top:1px dashed rgba(255,255,255,.6);border-bottom:1px dashed rgba(255,255,255,.6)}
+.viewer img{max-width:100%;max-height:78vh;object-fit:contain;align-self:center;border-radius:8px}
+.toast{position:fixed;right:18px;bottom:18px;z-index:120;display:flex;flex-direction:column;gap:8px}
+.toast div{background:var(--navy);color:#fff;padding:11px 15px;border-radius:10px;box-shadow:var(--shadow);max-width:340px;font-size:13px;animation:tin .2s}
+.toast .ok{background:var(--green)} .toast .err{background:var(--red)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+.result{display:none;margin-top:16px}
+.result.show{display:block}
+.result iframe{width:100%;height:600px;border:1px solid var(--line);border-radius:10px;background:#525659}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo"><svg class="qlogo" viewBox="0 -18 128 146" aria-label="QCode"><defs><linearGradient id="qG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2c27f"/><stop offset=".55" stop-color="#c9a25a"/><stop offset="1" stop-color="#9aa3ad"/></linearGradient></defs><path d="M37 30 C30 20 28 8 32 -6 C38 6 45 15 53 21 Z" fill="#b0503f"/><path d="M83 30 C90 20 92 8 88 -6 C82 6 75 15 67 21 Z" fill="#b0503f"/><circle cx="60" cy="62" r="33" fill="#3d434c"/><circle cx="60" cy="62" r="40" fill="none" stroke="url(#qG)" stroke-width="15"/><ellipse cx="47" cy="58" rx="8" ry="10" fill="#fff"/><ellipse cx="73" cy="58" rx="8" ry="10" fill="#fff"/><circle cx="48.5" cy="60" r="4.6" fill="#1d2025"/><circle cx="74.5" cy="60" r="4.6" fill="#1d2025"/><path d="M52 71 Q60 83 68 71 Z" fill="#5b2a24"/><path d="M84 86 C94 96 98 104 108 106" fill="none" stroke="url(#qG)" stroke-width="10" stroke-linecap="round"/><path d="M105 97 L121 105 L106 115 Q110 106 105 97 Z" fill="#c9a25a"/></svg></div>
+      <div class="bt"><b>Dokumen GDSP</b><small>QCode · Plant <span id="sbPlant">1601</span></small></div>
+      <button class="collapse-btn" id="collapseBtn" title="Perkecil / perbesar sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></button>
+    </div>
+    <nav class="nav">
+      <div class="sec">Utama</div>
+      <a data-page="dashboard" class="active" title="Dashboard"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span><span class="lbl">Dashboard</span><span class="cnt" id="navTodo" style="display:none"></span></a>
+      <div class="sec">Buat Dokumen</div>
+      <a data-page="dokumentasi" title="Dokumen BSSP & Timbangan"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg></span><span class="lbl">BSSP &amp; Timbangan</span></a>
+      <a data-page="scan" title="Rapikan & Gabung Scan"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg></span><span class="lbl">Rapikan &amp; Gabung Scan</span></a>
+      <div class="sec">Data</div>
+      <a data-page="riwayat" title="Riwayat Dokumen"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span><span class="lbl">Riwayat Dokumen</span></a>
+      <a data-page="pengaturan" title="Pengaturan"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></span><span class="lbl">Pengaturan</span></a>
+    </nav>
+    <div class="side-foot" id="sideFoot" title="Status koneksi"><span class="av">Q<span class="dot"></span></span><span class="ft"><b>Admin GDSP</b><small><span id="modeLabel">—</span> · v1.3</small></span></div>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ═══════════════ KONTEN ═══════════════ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub"></div></div>
+      <div class="spacer"></div>
+      <span class="muted" id="todayLabel"></span>
+    </header>
+
+    <div class="content">
+
+      <!-- ─────────────── DASHBOARD ─────────────── -->
+      <section class="page active" id="page-dashboard">
+        <div class="grid g3">
+          <div class="card span2">
+            <div class="card-title"><h3>Perlu tindakan</h3><span class="spacer"></span><span class="muted" style="font-size:12px" id="nowWeek"></span></div>
+            <div id="todo"></div>
+          </div>
+          <div class="card">
+            <h3>Aksi cepat</h3>
+            <div class="grid" style="gap:10px">
+              <button class="btn" data-go="dokumentasi">+ Dokumen BSSP &amp; timbangan</button>
+              <button class="btn ghost" data-go="scan">Rapikan &amp; gabung scan TTD</button>
+              <a class="btn ghost" id="openDrive" target="_blank">Buka folder Drive</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid g4" id="kpis" style="margin-top:16px"></div>
+
+        <div class="grid g3" style="margin-top:16px">
+          <div class="card span2">
+            <div class="card-title"><h3>Kg per jenis barang per week</h3><span class="spacer"></span><span class="muted" style="font-size:12px">8 week terakhir</span></div>
+            <div class="chart" id="chart"></div>
+            <div class="legend" id="legend"></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><h3>Komposisi jenis</h3><span class="spacer"></span><span class="muted" style="font-size:12px">4 week terakhir</span></div>
+            <div id="komposisi"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="card-title"><h3>Status BSSP per week</h3><span class="spacer"></span><span class="muted" style="font-size:12px">Dokumen → Print &amp; TTD → Scan → Kirim FA</span></div>
+          <div class="table-wrap"><table class="tbl" id="statusTbl"></table></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="card-title"><h3>Dokumen terbaru</h3><span class="spacer"></span><button class="btn ghost sm" data-go="riwayat">Lihat semua</button></div>
+          <div class="table-wrap"><table class="tbl" id="recentTbl"></table></div>
+        </div>
+      </section>
+
+      <!-- ─────────────── DOKUMEN BSSP & TIMBANGAN ─────────────── -->
+      <section class="page" id="page-dokumentasi">
+        <div class="card">
+          <div class="grid g4">
+            <div class="field"><label>Week</label><input class="input" id="dWeek" type="number" min="1" max="53" placeholder="mis. 45"></div>
+            <div class="field"><label>Plant</label><input class="input" id="dPlant"></div>
+            <div class="field"><label>Terangkan foto otomatis</label>
+              <select class="input" id="dBright"><option value="1">Ya</option><option value="0">Tidak</option></select>
+            </div>
+            <div class="field"><label>Isi PDF</label>
+              <select class="input" id="dMode"><option value="all">Tabel BSSP + rekap + dokumentasi</option><option value="dok">Dokumentasi foto saja</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Excel BSSP -->
+        <div class="card" style="margin-top:16px">
+          <div class="card-title"><span class="step-no">1</span><h3>Data BSSP dari Excel</h3><span class="muted" style="font-size:12px">opsional, untuk halaman tabel &amp; rekap</span></div>
+          <div class="row">
+            <button class="btn ghost" id="xlBtn">Pilih file Excel BSSP (.xlsx)</button>
+            <input type="file" id="xlInput" accept=".xlsx,.xls,.ods" hidden>
+            <span class="muted" style="font-size:12.5px">Format sama seperti file Bssp_week_xx dari SAP.</span>
+          </div>
+          <div id="xlSum" style="margin-top:12px"></div>
+        </div>
+
+        <!-- 2. Foto massal -->
+        <div class="card" style="margin-top:16px">
+          <div class="card-title"><span class="step-no">2</span><h3>Foto timbangan</h3><span class="spacer"></span>
+            <button class="btn ghost sm" id="trayBtn">+ Upload banyak foto</button>
+            <input type="file" id="trayInput" accept="image/*" multiple hidden>
+          </div>
+          <div class="muted" style="font-size:12.5px">Upload semua foto sekaligus, lalu <b>klik foto di bawah</b> → <b>klik kotak tujuan</b> di timbangan. Foto yang sudah dipakai ditandai ✓.</div>
+          <div class="tray" id="tray"></div>
+          <div class="hint pick-banner" id="pickBanner">Foto dipilih. Klik kotak <b>Foto barang</b> atau <b>Close-up</b> tujuan. <a href="#" id="pickCancel">Batal</a></div>
+        </div>
+
+        <!-- 3. Jenis barang -->
+        <div class="card" style="margin-top:16px">
+          <div class="card-title"><span class="step-no">3</span><h3>Jenis barang &amp; berat</h3><span class="spacer"></span>
+            <select class="input" id="dJenisSel" style="width:auto"></select><button class="btn" id="dAddSec">Tambah</button>
+          </div>
+          <div class="muted" style="font-size:12.5px">Satu baris = satu timbangan (foto barang | close-up layar timbangan | kg). <b>Sampah otomatis paling bawah.</b></div>
+        </div>
+        <div id="sections" style="margin-top:14px"></div>
+
+        <div class="card row stickybar" style="position:sticky;bottom:12px;z-index:5;flex-wrap:nowrap">
+          <div><div class="muted" style="font-size:12px">Total semua jenis</div><div style="font-size:20px;font-weight:700" id="dGrand">0,00 Kg</div></div>
+          <span class="spacer"></span>
+          <button class="btn ghost" id="dReset">Kosongkan</button>
+          <button class="btn" id="dBuild"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>Buat PDF</button>
+        </div>
+
+        <div class="card result" id="dResult">
+          <div class="row"><h3 style="margin:0" id="dResName">Hasil</h3><span class="spacer"></span>
+            <button class="btn navy" id="dPrint">🖨 Print</button>
+            <a class="btn ghost" id="dDownload">Unduh PDF</a>
+            <button class="btn ghost" id="dXlsx" style="display:none">Unduh Excel rapi</button>
+            <button class="btn green" id="dSave">Simpan ke Drive</button>
+          </div>
+          <iframe id="dPreview" style="margin-top:12px"></iframe>
+        </div>
+      </section>
+
+      <!-- ─────────────── RAPIKAN & GABUNG SCAN ─────────────── -->
+      <section class="page" id="page-scan">
+        <div class="card">
+          <div class="drop" id="drop">
+            <b>Klik atau tarik file ke sini</b><br>
+            <span class="muted">Foto (JPG/PNG) atau PDF hasil scan · bisa banyak file sekaligus</span>
+            <input type="file" id="scanInput" accept="image/*,application/pdf" multiple hidden>
+          </div>
+          <div class="grid g4" style="margin-top:14px">
+            <div class="field span2"><label>Nama file hasil</label><input class="input" id="sName"></div>
+            <div class="field"><label>Mode rapikan</label>
+              <select class="input" id="sMode">
+                <option value="auto">Otomatis (deteksi halaman foto)</option>
+                <option value="text">Dokumen / tabel (latar putih)</option>
+                <option value="photo">Halaman foto (jaga warna)</option>
+                <option value="none">Asli (tanpa olah)</option>
+              </select>
+            </div>
+            <div class="field"><label>Untuk week (status dashboard)</label><input class="input" id="sWeek" type="number" min="1" max="53"></div>
+          </div>
+          <label class="row" style="margin-top:12px;gap:8px;cursor:pointer"><input type="checkbox" id="sNoWm" checked> Hapus tulisan <i>"Dipindai dengan CamScanner"</i> di pojok kanan bawah (file PDF)</label>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="row"><h3 style="margin:0">Halaman (<span id="sCount">0</span>)</h3><span class="spacer"></span>
+            <button class="btn ghost sm" id="sClear">Hapus semua</button>
+            <button class="btn" id="sBuild">Rapikan &amp; Gabung</button>
+          </div>
+          <div class="thumbs" id="thumbs"></div>
+          <div class="empty" id="sEmpty">Belum ada halaman. Tambahkan file di atas.</div>
+        </div>
+
+        <div class="card result" id="sResult">
+          <div class="row"><h3 style="margin:0" id="sResName">Hasil</h3><span class="spacer"></span>
+            <button class="btn navy" id="sPrint">🖨 Print</button>
+            <a class="btn ghost" id="sDownload">Unduh</a>
+            <button class="btn green" id="sSave">Simpan ke Drive</button>
+          </div>
+          <iframe id="sPreview" style="margin-top:12px"></iframe>
+        </div>
+      </section>
+
+      <!-- ─────────────── RIWAYAT ─────────────── -->
+      <section class="page" id="page-riwayat">
+        <div class="card">
+          <div class="row">
+            <input class="input" id="rSearch" placeholder="Cari nama file / week…" style="max-width:280px">
+            <select class="input" id="rType" style="max-width:220px">
+              <option value="">Semua jenis</option><option value="DOKUMENTASI">Dokumen BSSP / timbangan</option><option value="SCAN">Scan rapi</option>
+            </select>
+            <span class="spacer"></span>
+            <a class="btn ghost sm" id="openSheet" target="_blank">Buka Sheet riwayat</a>
+            <button class="btn ghost sm" id="rRefresh">Muat ulang</button>
+          </div>
+          <div class="table-wrap" style="margin-top:12px"><table class="tbl" id="histTbl"></table></div>
+        </div>
+      </section>
+
+      <!-- ─────────────── PENGATURAN ─────────────── -->
+      <section class="page" id="page-pengaturan">
+        <div class="card" style="max-width:760px">
+          <div class="grid g2">
+            <div class="field"><label>Plant</label><input class="input" id="setPlant"></div>
+            <div class="field"><label>Kualitas foto di PDF</label>
+              <select class="input" id="setQual"><option value="standar">Standar (file lebih kecil)</option><option value="tinggi">Tinggi (lebih tajam)</option></select>
+            </div>
+            <div class="field" style="grid-column:1/-1"><label>Daftar jenis barang (pisahkan dengan koma)</label><input class="input" id="setJenis"></div>
+            <div class="field" style="grid-column:1/-1" id="keyField"><label>Kunci akses server (hanya untuk versi Vercel / GitHub)</label>
+              <div class="row" style="flex-wrap:nowrap"><input class="input" id="setKey" type="password" autocomplete="off" placeholder="tempel kunci dari buatKunciApi()"><button class="btn ghost" id="setKeyBtn">Simpan kunci</button></div></div>
+            <div class="field"><label>Terangkan foto otomatis</label>
+              <select class="input" id="setBright"><option value="1">Ya</option><option value="0">Tidak</option></select>
+            </div>
+          </div>
+          <div class="row" style="margin-top:16px"><span class="spacer"></span><button class="btn" id="setSave">Simpan pengaturan</button></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- Overlay proses -->
+<div class="overlay" id="overlay"><div class="box"><div class="spin"></div><b id="ovText">Memproses…</b><div class="progress"><i id="ovBar"></i></div></div></div>
+<!-- Modal potong foto -->
+<div class="modal" id="cropModal"><div class="mbox">
+  <div class="row"><b>Potong foto (rasio 3:4)</b><span class="spacer"></span><span class="muted" style="font-size:12px">Geser kotak · tarik titik biru untuk ubah ukuran</span></div>
+  <div class="crop-wrap" id="cropWrap"><canvas id="cropCanvas"></canvas><div class="crop-rect" id="cropRect"><div class="hd" id="cropHd"></div></div></div>
+  <div class="row"><button class="btn ghost" id="cropReset">Reset</button><span class="spacer"></span><button class="btn ghost" id="cropCancel">Batal</button><button class="btn" id="cropOk">Terapkan</button></div>
+</div></div>
+<!-- Modal lihat foto -->
+<div class="modal viewer" id="viewModal"><div class="mbox"><img id="viewImg" alt=""><div class="row"><span class="spacer"></span><button class="btn ghost" id="viewClose">Tutup</button></div></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="photoInput" accept="image/*" hidden>
+
+<script>
+/* ═════════════════════════════════════════════════════════════
+   Qcode · Dokumen GDSP — frontend v1.1
+   ═════════════════════════════════════════════════════════════ */
+'use strict';
+
+/* ───────── Ikon ───────── */
+const IC = {
+  rotL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>',
+  rotR: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>',
+  crop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>',
+  zoom: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>',
+  cam: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>',
+  kg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l2 12H4z"/><circle cx="12" cy="5" r="2"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18h.01"/></svg>',
+  avg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M6 16l4-5 4 3 5-7"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5 9-10"/></svg>',
+};
+
+/* ───────── Helper ───────── */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtKg = n => (Number(n) || 0).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const parseKg = v => { const n = parseFloat(String(v).replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : 0; };
+const pad2 = n => String(n).padStart(2, '0');
+const todayStr = () => { const d = new Date(); return `${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}.${d.getFullYear()}`; };
+const uid = () => Math.random().toString(36).slice(2, 10);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const BULAN = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+/** Minggu ISO (Senin–Minggu), sama dengan penomoran week di SAP. */
+function isoWeek(d) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - day);
+  const y = t.getUTCFullYear(), w = Math.ceil(((t - Date.UTC(y, 0, 1)) / 864e5 + 1) / 7);
+  return { year: y, week: w };
+}
+/** Senin dari minggu ISO tertentu. */
+function isoMonday(year, week) {
+  const j4 = new Date(Date.UTC(year, 0, 4)), day = j4.getUTCDay() || 7;
+  const mon = new Date(j4); mon.setUTCDate(j4.getUTCDate() - day + 1 + (week - 1) * 7);
+  return mon;
+}
+const fmtShort = d => `${d.getUTCDate()} ${BULAN[d.getUTCMonth()]}`;
+/** Daftar n minggu ISO ke belakang (mulai dari minggu lalu). */
+function lastWeeks(n, from = new Date()) {
+  const out = []; const d = new Date(from); d.setDate(d.getDate() - 7);
+  for (let i = 0; i < n; i++) { out.push(isoWeek(d)); d.setDate(d.getDate() - 7); }
+  return out;
+}
+
+function toast(msg, kind = '') {
+  const d = document.createElement('div'); d.className = kind; d.textContent = msg;
+  $('#toast').appendChild(d); setTimeout(() => d.remove(), 4200);
+}
+const overlay = {
+  show(t = 'Memproses…') { $('#ovText').textContent = t; $('#ovBar').style.width = '0'; $('#overlay').classList.add('show'); },
+  set(p, t) { $('#ovBar').style.width = Math.round(p * 100) + '%'; if (t) $('#ovText').textContent = t; },
+  hide() { $('#overlay').classList.remove('show'); },
+};
+
+/* ───────── Jembatan Apps Script (mode demo jika dibuka di luar Apps Script) ───────── */
+const HAS_GAS = typeof google !== 'undefined' && google.script && google.script.run;
+/* Dibuka dari Vercel / GitHub Pages → panggil Apps Script lewat URL /exec */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxp2vLVl7AH_DtOLvOFLJGfGsKdRkhrwK4yZ7LQxVQQA2RhIrsVx4DBM4b7qSEFHPYkUA/exec';
+const USE_API = !HAS_GAS && /^https:\/\//.test(location.href) && !!API_URL;
+const KEY_STORE = 'qdoc_api_key';
+const getKey = () => { try { return localStorage.getItem(KEY_STORE) || ''; } catch { return ''; } };
+const setKey = k => { try { localStorage.setItem(KEY_STORE, k); } catch { /* storage terblokir */ } };
+const DEMO_KEY = 'qdoc_demo_v1';
+const demoDB = {
+  load() { try { return JSON.parse(localStorage.getItem(DEMO_KEY)) || {}; } catch { return {}; } },
+  save(d) { try { localStorage.setItem(DEMO_KEY, JSON.stringify(d)); } catch { /* storage penuh/terblokir */ } },
+};
+const DEFAULT_SETTINGS = {
+  plant: '1601', jenisBarang: ['BESI', 'KUNINGAN', 'STAINLESS STEEL', 'KABEL', 'ALUMUNIUM', 'SAMPAH'],
+  autoBrighten: true, fotoKualitas: 'standar',
+};
+
+async function apiFetch(fn, args, retried) {
+  let key = getKey();
+  if (!key) { key = (prompt('Masukkan kunci akses aplikasi (dari fungsi buatKunciApi di Apps Script):') || '').trim(); if (!key) throw new Error('Kunci akses belum diisi (menu Pengaturan).'); setKey(key); }
+  let res;
+  try {
+    // text/plain = "simple request" → tanpa preflight OPTIONS (Apps Script tidak mendukung OPTIONS)
+    res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn, args, key }) });
+  } catch { throw new Error('Tidak bisa terhubung ke server. Cek internet / URL API.'); }
+  let j; try { j = await res.json(); } catch { throw new Error('Server tidak menjawab JSON. Pastikan Code.gs terbaru sudah di-deploy (akses: Siapa saja).'); }
+  if (!j.ok && j.code === 'BAD_KEY' && !retried) { setKey(''); return apiFetch(fn, args, true); }
+  if (!j.ok) throw new Error(j.error || 'Terjadi kesalahan di server.');
+  return j.data;
+}
+
+function api(fn, ...args) {
+  if (HAS_GAS) return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+  if (USE_API) return apiFetch(fn, args);
+  // ── Mode demo: data hanya di browser ──
+  const db = Object.assign({ rows: [], settings: null, status: {} }, demoDB.load());
+  switch (fn) {
+    case 'getDashboard': return Promise.resolve({ rows: db.rows, status: db.status, settings: Object.assign({}, DEFAULT_SETTINGS, db.settings || {}), rootUrl: '', sheetUrl: '' });
+    case 'saveSettings': db.settings = args[0]; demoDB.save(db); return Promise.resolve(args[0]);
+    case 'setStatus': { const [w, y, sent] = args; if (sent) db.status[`${y}-${w}`] = new Date().toISOString(); else delete db.status[`${y}-${w}`]; demoDB.save(db); return Promise.resolve({ ok: true }); }
+    case 'saveFile': {
+      const p = args[0];
+      db.rows.unshift({ waktu: new Date().toISOString(), type: p.type, week: p.week || '', name: p.name, url: '', id: uid(), pages: p.pages, totalKg: p.totalKg ?? '', sizeKB: Math.round(p.base64.length * .75 / 1024), oleh: 'demo', detail: p.detail || null });
+      demoDB.save(db); return Promise.resolve({ ok: true, url: '', demo: true });
+    }
+    case 'deleteRecord': db.rows = db.rows.filter(r => r.id !== args[0]); demoDB.save(db); return Promise.resolve({ ok: true });
+  }
+  return Promise.reject(new Error('Fungsi tidak dikenal: ' + fn));
+}
+
+/* ───────── State ───────── */
+const S = {
+  settings: { ...DEFAULT_SETTINGS }, rows: [], status: {}, rootUrl: '', sheetUrl: '',
+  doc: { sections: [], bssp: null }, tray: [], traySel: null,
+  scan: { pages: [] }, dPdf: null, sPdf: null,
+};
+
+/* ═════════════════════════════════════════════════════════════
+   NAVIGASI
+   ═════════════════════════════════════════════════════════════ */
+const PAGES = {
+  dashboard: ['Dashboard', 'Status BSSP, berat per jenis, dan dokumen terbaru'],
+  dokumentasi: ['Dokumen BSSP & Timbangan', 'Tabel BSSP + rekap + dokumentasi foto → 1 PDF siap print'],
+  scan: ['Rapikan & Gabung Scan', 'Latar putih, tulisan tegas, gabung jadi 1 PDF'],
+  riwayat: ['Riwayat Dokumen', 'Semua PDF yang sudah disimpan ke Drive'],
+  pengaturan: ['Pengaturan', 'Plant, jenis barang, tanda tangan, kualitas foto'],
+};
+function go(page) {
+  $$('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page));
+  $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
+  $('#pageTitle').textContent = PAGES[page][0]; $('#pageSub').textContent = PAGES[page][1];
+  $('#sidebar').classList.remove('open'); $('#backdrop').classList.remove('show');
+  if (page === 'riwayat') renderHistory();
+  window.scrollTo(0, 0);
+}
+$$('.nav a').forEach(a => a.onclick = () => go(a.dataset.page));
+document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { if (b.dataset.week) $('#dWeek').value = b.dataset.week; if (b.dataset.sweek) $('#sWeek').value = b.dataset.sweek; go(b.dataset.go); } });
+const MINI_KEY = 'qdoc_sidebar_mini';
+try { if (localStorage.getItem(MINI_KEY) === '1') $('.app').classList.add('mini'); } catch { /* storage terblokir */ }
+$('#collapseBtn').onclick = () => {
+  const on = $('.app').classList.toggle('mini');
+  try { localStorage.setItem(MINI_KEY, on ? '1' : '0'); } catch { /* abaikan */ }
+};
+// tooltip menu saat sidebar mode kecil
+const sbTip = Object.assign(document.createElement('div'), { className: 'sb-tip' }); document.body.appendChild(sbTip);
+$$('.nav a').forEach(a => {
+  a.addEventListener('mouseenter', () => {
+    if (!$('.app').classList.contains('mini') || window.innerWidth <= 900) return;
+    const r = a.getBoundingClientRect(); sbTip.textContent = a.title;
+    sbTip.style.left = r.right + 12 + 'px'; sbTip.style.top = r.top + r.height / 2 + 'px'; sbTip.classList.add('show');
+  });
+  a.addEventListener('mouseleave', () => sbTip.classList.remove('show'));
+});
+$('#menuBtn').onclick = () => { $('#sidebar').classList.add('open'); $('#backdrop').classList.add('show'); };
+$('#backdrop').onclick = () => { $('#sidebar').classList.remove('open'); $('#backdrop').classList.remove('show'); };
+
+/* ═════════════════════════════════════════════════════════════
+   DASHBOARD
+   ═════════════════════════════════════════════════════════════ */
+const JENIS_COLOR = { BESI: '#3d434c', SAMPAH: '#aeb4bc', KUNINGAN: '#c9a25a', 'STAINLESS STEEL': '#5f7f86', STAINLESS: '#5f7f86', KABEL: '#a0603a', ALUMUNIUM: '#7a7f99', ALUMINIUM: '#7a7f99', TOTAL: '#3d434c' };
+const EXTRA_COLORS = ['#8a3b5c', '#3d6a4a', '#6b5a2e', '#4a4f8c', '#5f6b76'];
+function colorOf(j, i = 0) { return JENIS_COLOR[j] || EXTRA_COLORS[i % EXTRA_COLORS.length]; }
+
+async function loadData() {
+  try {
+    const d = await api('getDashboard');
+    S.rows = d.rows || []; S.status = d.status || {}; S.rootUrl = d.rootUrl; S.sheetUrl = d.sheetUrl;
+    S.settings = Object.assign({}, DEFAULT_SETTINGS, d.settings || {});
+  } catch (e) { toast('Gagal memuat data: ' + e.message, 'err'); }
+  applySettings(); renderDashboard(); renderHistory();
+}
+
+/** Dokumen terbaru per week (dokumen BSSP/timbangan & scan). */
+function weekDocs(year, week) {
+  const match = r => String(r.week) === String(week) && Math.abs(new Date(r.waktu).getFullYear() - year) <= 1;
+  return {
+    dok: S.rows.find(r => r.type === 'DOKUMENTASI' && match(r)) || null,
+    scan: S.rows.find(r => r.type === 'SCAN' && match(r)) || null,
+    sent: S.status[`${year}-${week}`] || null,
+  };
+}
+
+/** Week paling awal yang punya data → week sebelumnya tidak dianggap "belum" (app belum dipakai). */
+function firstDataKey() {
+  const keys = S.rows.filter(r => r.week).map(r => new Date(r.waktu).getFullYear() * 100 + Number(r.week));
+  return keys.length ? Math.min(...keys) : null;
+}
+function renderDashboard() {
+  const now = new Date(), cur = isoWeek(now);
+  $('#nowWeek').textContent = `Sekarang week ${cur.week} · ${cur.year}`;
+  const k0 = firstDataKey();
+  const inScope = w => k0 == null ? false : w.year * 100 + w.week >= k0 - 1;  // toleransi 1 week (dibuat terlambat)
+  const weeks8 = lastWeeks(8).filter(inScope);
+
+  // ── Perlu tindakan (6 week terakhir) ──
+  const todos = [];
+  (k0 == null ? lastWeeks(1) : lastWeeks(6).filter(inScope)).forEach(({ year, week }) => {
+    const w = weekDocs(year, week);
+    if (!w.dok) todos.push({ c: 'var(--red)', t: `<b>Week ${week}</b> dokumen BSSP &amp; timbangan belum dibuat`, a: `<button class="btn sm" data-go="dokumentasi" data-week="${week}">Buat</button>` });
+    else if (!w.scan) todos.push({ c: 'var(--amber)', t: `<b>Week ${week}</b> sudah dibuat, scan TTD belum diupload`, a: `<button class="btn sm ghost" data-go="scan" data-sweek="${week}">Upload scan</button>` });
+    else if (!w.sent) todos.push({ c: 'var(--blue)', t: `<b>Week ${week}</b> lengkap, tinggal kirim ke FA`, a: `<button class="tg" data-sent="${year}-${week}">Tandai terkirim</button>` });
+  });
+  $('#todo').innerHTML = todos.length
+    ? `<div class="todo">${todos.map(x => `<div class="it"><span class="dot" style="background:${x.c}"></span><span>${x.t}</span><span class="spacer"></span>${x.a}</div>`).join('')}</div>`
+    : `<div class="allgood">${IC.check.replace('<svg', '<svg width="22" height="22"')} Semua BSSP 6 week terakhir sudah lengkap &amp; terkirim ke FA.</div>`;
+  const nt = $('#navTodo'); nt.textContent = todos.length; nt.style.display = todos.length ? '' : 'none';
+
+  // ── KPI ──
+  const thisMonth = S.rows.filter(r => { const d = new Date(r.waktu); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); });
+  const kgMonth = thisMonth.filter(r => r.type === 'DOKUMENTASI').reduce((s, r) => s + (Number(r.totalKg) || 0), 0);
+  const kg8 = weeks8.map(w => weekDocs(w.year, w.week).dok).filter(Boolean).map(r => Number(r.totalKg) || 0);
+  const avg = kg8.length ? kg8.reduce((a, b) => a + b, 0) / kg8.length : 0;
+  const incomplete = weeks8.filter(w => { const x = weekDocs(w.year, w.week); return !(x.dok && x.scan && x.sent); }).length;
+  const kpis = [
+    ['Kg terdokumentasi bulan ini', fmtKg(kgMonth), IC.kg, 'var(--blue-50)', 'var(--blue)'],
+    ['Rata-rata kg / week', fmtKg(avg), IC.avg, 'var(--violet-50)', 'var(--violet)'],
+    ['Dokumen dibuat bulan ini', thisMonth.length, IC.doc, 'var(--green-50)', 'var(--green)'],
+    ['Week belum lengkap (8 week)', incomplete, IC.warn, incomplete ? 'var(--amber-50)' : 'var(--green-50)', incomplete ? 'var(--amber)' : 'var(--green)'],
+  ];
+  $('#kpis').innerHTML = kpis.map(([l, v, ic, bg, fg]) => `<div class="card kpi"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><div class="v">${esc(v)}</div><div class="l">${l}</div></div></div>`).join('');
+
+  // ── Grafik bertumpuk kg per jenis per week ──
+  const chartWeeks = lastWeeks(8).reverse();
+  const data = chartWeeks.map(w => { const r = weekDocs(w.year, w.week).dok; return { w, r, det: r ? (r.detail || { TOTAL: Number(r.totalKg) || 0 }) : {} }; });
+  const jenisAll = [...new Set(data.flatMap(d => Object.keys(d.det)))];
+  const max = Math.max(1, ...data.map(d => Object.values(d.det).reduce((a, b) => a + b, 0)));
+  $('#chart').innerHTML = data.map(d => {
+    const tot = Object.values(d.det).reduce((a, b) => a + b, 0);
+    const segs = jenisAll.filter(j => d.det[j]).map((j, i) => `<i title="${esc(j)}: ${fmtKg(d.det[j])} kg" style="height:${d.det[j] / max * 150}px;background:${colorOf(j, i)}"></i>`).join('');
+    return `<div class="col"><span class="val">${tot ? fmtKg(tot) : ''}</span><div class="stack">${segs}</div><small>W${d.w.week}</small></div>`;
+  }).join('');
+  $('#legend').innerHTML = jenisAll.length ? jenisAll.map((j, i) => `<span><i style="background:${colorOf(j, i)}"></i>${esc(j)}</span>`).join('') : '<span>Belum ada data berat untuk 8 week terakhir.</span>';
+
+  // ── Komposisi jenis (4 week terakhir) ──
+  const komp = {};
+  lastWeeks(4).forEach(w => { const r = weekDocs(w.year, w.week).dok; if (r?.detail) Object.entries(r.detail).forEach(([j, v]) => komp[j] = (komp[j] || 0) + v); });
+  const kTot = Object.values(komp).reduce((a, b) => a + b, 0);
+  $('#komposisi').innerHTML = kTot
+    ? Object.entries(komp).sort((a, b) => b[1] - a[1]).map(([j, v], i) => `<div class="hbar"><span>${esc(j)}</span><div class="track"><i style="width:${v / kTot * 100}%;background:${colorOf(j, i)}"></i></div><span class="num">${Math.round(v / kTot * 100)}%</span></div>`).join('') + `<div class="muted" style="font-size:12px;margin-top:6px">Total ${fmtKg(kTot)} kg</div>`
+    : '<div class="empty">Belum ada data.</div>';
+
+  // ── Tabel status per week ──
+  $('#statusTbl').innerHTML = !weeks8.length ? '<tr><td class="empty">Belum ada data. Status muncul setelah dokumen pertama disimpan.</td></tr>' : '<tr><th>Week</th><th>Periode</th><th>Dokumen BSSP</th><th>Scan TTD</th><th style="text-align:right">Total kg</th><th>Kirim FA</th></tr>' +
+    weeks8.map(({ year, week }) => {
+      const x = weekDocs(year, week), mon = isoMonday(year, week), sun = new Date(mon); sun.setUTCDate(mon.getUTCDate() + 6);
+      const link = (r, label) => r ? (r.url ? `<a href="${esc(r.url)}" target="_blank" class="badge b-green">✓ ${label}</a>` : `<span class="badge b-green">✓ ${label}</span>`) : '<span class="badge b-grey">belum</span>';
+      return `<tr><td><b>W${week}</b></td><td class="muted">${fmtShort(mon)} – ${fmtShort(sun)}</td><td>${link(x.dok, 'ada')}</td><td>${link(x.scan, 'ada')}</td><td style="text-align:right">${x.dok ? fmtKg(x.dok.totalKg) : '-'}</td><td><button class="tg ${x.sent ? 'on' : ''}" data-sent="${year}-${week}">${x.sent ? '✓ Terkirim' : 'Belum'}</button></td></tr>`;
+    }).join('');
+
+  $('#recentTbl').innerHTML = tableHTML(S.rows.slice(0, 6), false);
+  const od = $('#openDrive'); if (S.rootUrl) { od.href = S.rootUrl; od.style.display = ''; } else od.style.display = 'none';
+}
+
+// toggle status kirim FA
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-sent]'); if (!b) return;
+  const [year, week] = b.dataset.sent.split('-').map(Number);
+  const sent = !S.status[`${year}-${week}`];
+  b.disabled = true;
+  try {
+    await api('setStatus', week, year, sent);
+    if (sent) S.status[`${year}-${week}`] = new Date().toISOString(); else delete S.status[`${year}-${week}`];
+    renderDashboard(); toast(sent ? `Week ${week} ditandai terkirim ke FA` : `Tanda kirim week ${week} dibatalkan`, 'ok');
+  } catch (err) { toast('Gagal: ' + err.message, 'err'); b.disabled = false; }
+});
+
+function tableHTML(rows, withActions) {
+  if (!rows.length) return '<tr><td class="empty">Belum ada dokumen tersimpan.</td></tr>';
+  const head = `<tr><th>Waktu</th><th>Jenis</th><th>Week</th><th>Nama file</th><th style="text-align:right">Total kg</th><th>Hal.</th>${withActions ? '<th></th>' : ''}</tr>`;
+  return head + rows.map(r => {
+    const d = new Date(r.waktu);
+    const t = isNaN(d) ? esc(r.waktu) : d.toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const badge = r.type === 'DOKUMENTASI' ? '<span class="badge b-green">BSSP</span>' : '<span class="badge b-amber">Scan</span>';
+    const name = r.url ? `<a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a>` : esc(r.name);
+    return `<tr><td class="muted">${t}</td><td>${badge}</td><td>${esc(r.week) || '-'}</td><td>${name}</td><td style="text-align:right">${r.totalKg !== '' && r.totalKg != null ? fmtKg(r.totalKg) : '-'}</td><td>${esc(r.pages) || '-'}</td>${withActions ? `<td><button class="icon-btn" data-del="${esc(r.id)}" title="Hapus">${IC.trash}</button></td>` : ''}</tr>`;
+  }).join('');
+}
+
+/* ═════════════════════════════════════════════════════════════
+   RIWAYAT & PENGATURAN
+   ═════════════════════════════════════════════════════════════ */
+function renderHistory() {
+  const q = $('#rSearch').value.trim().toLowerCase(), t = $('#rType').value;
+  const rows = S.rows.filter(r => (!t || r.type === t) && (!q || `${r.name} ${r.week}`.toLowerCase().includes(q)));
+  $('#histTbl').innerHTML = tableHTML(rows, true);
+  const os = $('#openSheet'); if (S.sheetUrl) { os.href = S.sheetUrl; os.style.display = ''; } else os.style.display = 'none';
+}
+$('#rSearch').oninput = renderHistory;
+$('#rType').onchange = renderHistory;
+$('#rRefresh').onclick = loadData;
+$('#histTbl').onclick = async e => {
+  const b = e.target.closest('[data-del]'); if (!b) return;
+  if (!confirm('Hapus dokumen ini dari riwayat? File di Drive juga dipindah ke sampah.')) return;
+  try { await api('deleteRecord', b.dataset.del); toast('Dokumen dihapus', 'ok'); loadData(); }
+  catch (err) { toast('Gagal menghapus: ' + err.message, 'err'); }
+};
+
+function applySettings() {
+  const s = S.settings;
+  $('#sbPlant').textContent = s.plant;
+  $('#setPlant').value = s.plant;
+  $('#setJenis').value = s.jenisBarang.join(', ');
+  $('#setBright').value = s.autoBrighten ? '1' : '0';
+  $('#setQual').value = s.fotoKualitas;
+  if (!$('#dPlant').value) $('#dPlant').value = s.plant;
+  $('#dBright').value = s.autoBrighten ? '1' : '0';
+  $('#dJenisSel').innerHTML = s.jenisBarang.map(j => `<option>${esc(j)}</option>`).join('') + '<option value="__custom">Lainnya…</option>';
+}
+$('#setSave').onclick = async () => {
+  const s = {
+    plant: $('#setPlant').value.trim() || '1601',
+    jenisBarang: $('#setJenis').value.split(',').map(x => x.trim().toUpperCase()).filter(Boolean),
+    autoBrighten: $('#setBright').value === '1',
+    fotoKualitas: $('#setQual').value,
+  };
+  try { S.settings = Object.assign({}, DEFAULT_SETTINGS, await api('saveSettings', s)); applySettings(); toast('Pengaturan disimpan', 'ok'); }
+  catch (e) { toast('Gagal menyimpan: ' + e.message, 'err'); }
+};
+
+/* ═════════════════════════════════════════════════════════════
+   EXCEL BSSP — parser murni (bisa dites terpisah)
+   ═════════════════════════════════════════════════════════════ */
+/**
+ * Baca sheet BSSP (format export SAP: judul, PLANT, WEEK + tanggal, header "No." lalu data).
+ * @param {any[][]} aoa  array baris (XLSX.utils.sheet_to_json header:1, raw:true; tanggal berupa nomor seri)
+ */
+function parseBsspAoa(aoa) {
+  const txt = v => String(v ?? '').trim();
+  // tanggal Excel = nomor seri (hari sejak 30-12-1899); dibaca UTC supaya tidak geser karena zona waktu
+  const serial = v => typeof v === 'number' && v > 20000 && v < 90000 ? new Date(Date.UTC(1899, 11, 30) + Math.round(v) * 864e5) : null;
+  const fmtD = v => { const d = serial(v); return d ? `${pad2(d.getUTCDate())}.${pad2(d.getUTCMonth() + 1)}.${d.getUTCFullYear()}` : txt(v); };
+  const fmtRange = v => { const d = serial(v); return d ? `${pad2(d.getUTCDate())}-${BULAN[d.getUTCMonth()]}-${String(d.getUTCFullYear()).slice(2)}` : txt(v); };
+  const hdr = aoa.findIndex(r => r.some(c => /^no\.?$/i.test(txt(c))));
+  if (hdr < 0) throw new Error('Header tabel (kolom "No.") tidak ditemukan.');
+  const meta = { plant: '', week: '', dari: '', sampai: '' };
+  for (let i = 0; i < hdr; i++) {
+    const r = aoa[i];
+    r.forEach((c, j) => {
+      const t = txt(c);
+      if (/^plant$/i.test(t)) meta.plant = txt(r.slice(j + 1).find(v => txt(v)));
+      const m = t.match(/^week\s*(\d+)/i);
+      if (m) {
+        meta.week = m[1];
+        const rest = r.slice(j + 1).filter(v => txt(v) && !/^s\/?d$/i.test(txt(v)));
+        meta.dari = fmtRange(rest[0] ?? ''); meta.sampai = fmtRange(rest[1] ?? '');
+      }
+    });
+  }
+  // peta kolom dari teks header (header bisa 2 baris: "Kode" + "Material")
+  const H = aoa[hdr].map(txt).map(s => s.toLowerCase());
+  const H2 = (aoa[hdr + 1] || []).map(txt).map(s => s.toLowerCase());
+  const col = {};
+  const keys = { no: /^no\.?$/, tanggal: /tanggal/, document: /document|dokumen/, kode: /kode|material/, nama: /nama/, qty: /^qty|jumlah/, recipient: /recipient/, change: /change/, ket: /keterangan|ket\.?$/ };
+  for (const [k, re] of Object.entries(keys)) {
+    let j = H.findIndex(h => re.test(h)); if (j < 0) j = H2.findIndex(h => re.test(h));
+    if (j >= 0) col[k] = j;
+  }
+  if (col.no == null || col.nama == null) throw new Error('Kolom "No." / "Nama Barang" tidak ditemukan.');
+  const rows = []; let started = false;
+  for (let i = hdr + 1; i < aoa.length; i++) {
+    const r = aoa[i], no = r[col.no];
+    const isNum = typeof no === 'number' || /^\d+$/.test(txt(no));
+    if (!isNum) { if (started) break; else continue; }
+    started = true;
+    const g = k => col[k] == null ? '' : r[col[k]];
+    rows.push({ no: txt(no), tanggal: fmtD(g('tanggal')), document: txt(g('document')), kode: txt(g('kode')), nama: txt(g('nama')), qty: txt(g('qty')), recipient: txt(g('recipient')), change: txt(g('change')), ket: txt(g('ket')) });
+  }
+  if (!rows.length) throw new Error('Tidak ada baris data di bawah header.');
+  return { ...meta, rows };
+}
+
+$('#xlBtn').onclick = () => $('#xlInput').click();
+$('#xlInput').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  if (!window.XLSX) { toast('Pembaca Excel belum termuat, cek koneksi internet.', 'err'); return; }
+  try {
+    const wb = XLSX.read(await f.arrayBuffer());
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const data = parseBsspAoa(XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '' }));
+    data.fileName = f.name;
+    S.doc.bssp = data;
+    if (data.week) $('#dWeek').value = data.week;
+    if (data.plant) $('#dPlant').value = data.plant;
+    $('#dMode').value = 'all';
+    renderXl(); toast(`Excel terbaca: ${data.rows.length} baris`, 'ok');
+  } catch (err) { toast('Excel gagal dibaca: ' + err.message, 'err'); }
+};
+function renderXl() {
+  const b = S.doc.bssp;
+  $('#xlSum').innerHTML = b ? `<div class="xl-sum">${IC.check.replace('<svg', '<svg width="20" height="20"')}<b>${esc(b.fileName)}</b><span>Week ${esc(b.week)} · ${esc(b.dari)} s/d ${esc(b.sampai)}</span><span>${b.rows.length} baris</span><span class="spacer"></span><button class="btn ghost sm" id="xlClear">Hapus</button></div>` : '';
+  const c = $('#xlClear'); if (c) c.onclick = () => { S.doc.bssp = null; renderXl(); };
+}
+
+/* ═════════════════════════════════════════════════════════════
+   PENGOLAHAN GAMBAR (Canvas)
+   ═════════════════════════════════════════════════════════════ */
+async function loadBitmap(file) {
+  try { return await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch {
+    const url = URL.createObjectURL(file); const img = new Image(); img.src = url; await img.decode(); URL.revokeObjectURL(url); return img;
+  }
+}
+function rotatedCanvas(src, quarter) {
+  const q = ((quarter % 4) + 4) % 4, w = src.width, h = src.height;
+  const c = document.createElement('canvas'); c.width = q % 2 ? h : w; c.height = q % 2 ? w : h;
+  const x = c.getContext('2d'); x.translate(c.width / 2, c.height / 2); x.rotate(q * Math.PI / 2); x.drawImage(src, -w / 2, -h / 2);
+  return c;
+}
+function thumbURL(src, max = 260) {
+  const k = max / Math.max(src.width, src.height), c = document.createElement('canvas');
+  c.width = Math.round(src.width * k); c.height = Math.round(src.height * k);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', .75);
+}
+function pct(hist, total, p) { const t = total * p; let acc = 0; for (let i = 0; i < 256; i++) { acc += hist[i]; if (acc >= t) return i; } return 255; }
+
+/** Terangkan foto: autocontrast + gamma adaptif. */
+function brightenImageData(id, target = .62) {
+  const d = id.data, n = d.length / 4;
+  const hs = [new Uint32Array(256), new Uint32Array(256), new Uint32Array(256)];
+  for (let i = 0; i < d.length; i += 4) { hs[0][d[i]]++; hs[1][d[i + 1]]++; hs[2][d[i + 2]]++; }
+  const lo = hs.map(h => pct(h, n, .003)), hi = hs.map(h => pct(h, n, .997));
+  let sum = 0;
+  for (let i = 0; i < d.length; i += 16) {
+    const r = (d[i] - lo[0]) / Math.max(1, hi[0] - lo[0]), g = (d[i + 1] - lo[1]) / Math.max(1, hi[1] - lo[1]), b = (d[i + 2] - lo[2]) / Math.max(1, hi[2] - lo[2]);
+    sum += Math.min(1, Math.max(0, .299 * r + .587 * g + .114 * b));
+  }
+  const mean = Math.max(.02, sum / (d.length / 16)), gam = Math.min(2, Math.max(1, Math.log(mean) / Math.log(target)));
+  const luts = [0, 1, 2].map(c => { const l = new Uint8ClampedArray(256), span = Math.max(1, hi[c] - lo[c]); for (let v = 0; v < 256; v++) l[v] = 255 * Math.pow(Math.min(1, Math.max(0, (v - lo[c]) / span)), 1 / gam); return l; });
+  for (let i = 0; i < d.length; i += 4) { d[i] = luts[0][d[i]]; d[i + 1] = luts[1][d[i + 1]]; d[i + 2] = luts[2][d[i + 2]]; }
+  return id;
+}
+function sharpen(ctx, w, h, amount = .35) {
+  const id = ctx.getImageData(0, 0, w, h), s = id.data, o = new Uint8ClampedArray(s);
+  for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
+    const i = (y * w + x) * 4;
+    for (let c = 0; c < 3; c++) o[i + c] = s[i + c] * (1 + 4 * amount) - amount * (s[i - 4 + c] + s[i + 4 + c] + s[i - w * 4 + c] + s[i + w * 4 + c]);
+  }
+  id.data.set(o); ctx.putImageData(id, 0, 0);
+}
+async function canvasJpeg(c, q = .86) { const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', q)); return new Uint8Array(await blob.arrayBuffer()); }
+
+/** Area potong default: 3:4 di tengah (pecahan 0..1 dari gambar setelah diputar). */
+function defaultCrop(w, h) {
+  const tr = 3 / 4;
+  if (w / h > tr) { const cw = h * tr / w; return { x: (1 - cw) / 2, y: 0, w: cw, h: 1 }; }
+  const ch = w / tr / h; return { x: 0, y: (1 - ch) / 2, w: 1, h: ch };
+}
+/** Siapkan foto dokumentasi: putar → potong 3:4 (otomatis/manual) → resize → terangkan → pertajam. */
+async function preparePhoto(ph, bright) {
+  const src = rotatedCanvas(ph.bitmap, ph.rot);
+  const W = S.settings.fotoKualitas === 'tinggi' ? 1050 : 780, H = Math.round(W * 4 / 3);
+  const cr = ph.crop || defaultCrop(src.width, src.height);
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high';
+  x.drawImage(src, cr.x * src.width, cr.y * src.height, cr.w * src.width, cr.h * src.height, 0, 0, W, H);
+  if (bright) x.putImageData(brightenImageData(x.getImageData(0, 0, W, H)), 0, 0);
+  sharpen(x, W, H, .25);
+  ph.bytes = await canvasJpeg(c, .85); ph.url = c.toDataURL('image/jpeg', .7);
+  return ph;
+}
+
+/* ───────── Rapikan halaman scan ───────── */
+function maxFilter(src, w, h, r) {
+  const tmp = new Uint8ClampedArray(src.length), out = new Uint8ClampedArray(src.length);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { let m = 0; const a = Math.max(0, x - r), b = Math.min(w - 1, x + r), row = y * w; for (let k = a; k <= b; k++) if (src[row + k] > m) m = src[row + k]; tmp[row + x] = m; }
+  for (let x = 0; x < w; x++) for (let y = 0; y < h; y++) { let m = 0; const a = Math.max(0, y - r), b = Math.min(h - 1, y + r); for (let k = a; k <= b; k++) if (tmp[k * w + x] > m) m = tmp[k * w + x]; out[y * w + x] = m; }
+  return out;
+}
+function boxBlur(src, w, h, r) {
+  const tmp = new Float32Array(src.length), out = new Uint8ClampedArray(src.length);
+  for (let y = 0; y < h; y++) { let acc = 0, cnt = 0; const row = y * w; for (let x = -r; x < w; x++) { if (x + r < w) { acc += src[row + x + r]; cnt++; } if (x - r - 1 >= 0) { acc -= src[row + x - r - 1]; cnt--; } if (x >= 0) tmp[row + x] = acc / cnt; } }
+  for (let x = 0; x < w; x++) { let acc = 0, cnt = 0; for (let y = -r; y < h; y++) { if (y + r < h) { acc += tmp[(y + r) * w + x]; cnt++; } if (y - r - 1 >= 0) { acc -= tmp[(y - r - 1) * w + x]; cnt--; } if (y >= 0) out[y * w + x] = acc / cnt; } }
+  return out;
+}
+function isPhotoPage(c) {
+  const t = document.createElement('canvas'); t.width = 200; t.height = Math.round(200 * c.height / c.width);
+  const x = t.getContext('2d'); x.drawImage(c, 0, 0, t.width, t.height);
+  const d = x.getImageData(0, 0, t.width, t.height).data; let col = 0;
+  for (let i = 0; i < d.length; i += 4) { const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]); if (mx > 40 && (mx - mn) / mx > .28) col++; }
+  return col / (d.length / 4) > .08;
+}
+/** Halaman dokumen: latar dibagi estimasi latar (kernel besar → header gelap tetap utuh). */
+function whitenPage(c) {
+  const w = c.width, h = c.height, x = c.getContext('2d', { willReadFrequently: true });
+  const id = x.getImageData(0, 0, w, h), d = id.data;
+  const sw = Math.max(1, Math.round(w / 4)), shh = Math.max(1, Math.round(h / 4));
+  const sc = document.createElement('canvas'); sc.width = sw; sc.height = shh;
+  const sx = sc.getContext('2d', { willReadFrequently: true }); sx.drawImage(c, 0, 0, sw, shh);
+  const sd = sx.getImageData(0, 0, sw, shh).data;
+  const bgc = document.createElement('canvas'); bgc.width = sw; bgc.height = shh;
+  const bx = bgc.getContext('2d'), bid = bx.createImageData(sw, shh);
+  for (let ch = 0; ch < 3; ch++) {
+    const one = new Uint8ClampedArray(sw * shh); for (let i = 0; i < one.length; i++) one[i] = sd[i * 4 + ch];
+    const bg = boxBlur(maxFilter(one, sw, shh, 15), sw, shh, 12); for (let i = 0; i < one.length; i++) bid.data[i * 4 + ch] = bg[i];
+  }
+  for (let i = 3; i < bid.data.length; i += 4) bid.data[i] = 255;
+  bx.putImageData(bid, 0, 0);
+  const big = document.createElement('canvas'); big.width = w; big.height = h;
+  const gx = big.getContext('2d', { willReadFrequently: true }); gx.imageSmoothingQuality = 'high'; gx.drawImage(bgc, 0, 0, w, h);
+  const bgd = gx.getImageData(0, 0, w, h).data;
+  for (let i = 0; i < d.length; i += 4) for (let ch = 0; ch < 3; ch++) d[i + ch] = (d[i + ch] * 255 / Math.max(1, bgd[i + ch]) - 15) * 255 / (238 - 15);
+  x.putImageData(id, 0, 0); sharpen(x, w, h, .3);
+}
+function levelsPage(c) {
+  const w = c.width, h = c.height, x = c.getContext('2d', { willReadFrequently: true });
+  const id = x.getImageData(0, 0, w, h), d = id.data, n = d.length / 4;
+  const hs = [new Uint32Array(256), new Uint32Array(256), new Uint32Array(256)];
+  for (let i = 0; i < d.length; i += 4) { hs[0][d[i]]++; hs[1][d[i + 1]]++; hs[2][d[i + 2]]++; }
+  const lo = hs.map(hh => pct(hh, n, .015)), hi = hs.map(hh => pct(hh, n, .92));
+  for (let i = 0; i < d.length; i += 4) for (let ch = 0; ch < 3; ch++) d[i + ch] = (d[i + ch] - lo[ch]) * 255 / Math.max(1, hi[ch] - lo[ch]);
+  x.putImageData(id, 0, 0); sharpen(x, w, h, .25);
+}
+async function processScanPage(pg, mode, noWm) {
+  let base = pg.canvas;
+  if (noWm && pg.fromPdf) { // tutup watermark CamScanner (pojok kanan bawah)
+    base = document.createElement('canvas'); base.width = pg.canvas.width; base.height = pg.canvas.height;
+    const bx = base.getContext('2d'); bx.drawImage(pg.canvas, 0, 0); bx.fillStyle = '#fff';
+    bx.fillRect(base.width * .58, base.height * .955, base.width * .42, base.height * .045);
+  }
+  let c = rotatedCanvas(base, pg.rot);
+  const target = 1654 * (c.width > c.height ? 1.414 : 1);
+  if (Math.abs(c.width - target) > 40) {
+    const k = target / c.width, r = document.createElement('canvas'); r.width = Math.round(c.width * k); r.height = Math.round(c.height * k);
+    const rx = r.getContext('2d'); rx.imageSmoothingQuality = 'high'; rx.drawImage(c, 0, 0, r.width, r.height); c = r;
+  }
+  const m = mode === 'auto' ? (isPhotoPage(c) ? 'photo' : 'text') : mode;
+  if (m === 'text') whitenPage(c); else if (m === 'photo') levelsPage(c);
+  return { bytes: await canvasJpeg(c, .85), w: c.width, h: c.height };
+}
+
+/* ═════════════════════════════════════════════════════════════
+   GENERATOR PDF (pdf-lib) — fungsi murni, bisa dites terpisah
+   ═════════════════════════════════════════════════════════════ */
+
+/** Teks aman untuk font standar PDF (WinAnsi). */
+function winAnsi(s) {
+  return String(s ?? '').replace(/[‘’‚]/g, "'").replace(/[“”„″]/g, '"').replace(/[–—]/g, '-').replace(/ /g, ' ').replace(/[^\x20-\x7E\xA0-\xFF]/g, '?');
+}
+/** Atur PDF supaya langsung print ukuran asli (tanpa "fit to page"). */
+function printReady(PDFLib, pdf) {
+  try {
+    const vp = pdf.catalog.getOrCreateViewerPreferences();
+    vp.setPrintScaling(PDFLib.PrintScaling.None);
+    vp.setDuplex(PDFLib.Duplex.Simplex);
+    vp.setPickTrayByPDFSize(true);
+  } catch { /* versi pdf-lib lama: abaikan */ }
+}
+
+/**
+ * PDF BSSP lengkap:
+ *  (opsional) halaman tabel BSSP dari Excel + rekap timbang
+ *  + dokumentasi timbangan (format DOKUMENTASI BSSP WEEK 36).
+ * Semua halaman A4 portrait, nomor halaman di footer → tinggal print.
+ * @param {object} PDFLib
+ * @param {{plant:string, week:string, bssp?:{dari:string,sampai:string,rows:object[]},
+ *          sections:{jenis:string, items:{kg:number, full?:Uint8Array, close?:Uint8Array}[]}[]}} o
+ */
+async function buildBsspPdf(PDFLib, o) {
+  const { PDFDocument, StandardFonts, rgb } = PDFLib;
+  const pdf = await PDFDocument.create();
+  pdf.setTitle(`${o.bssp ? 'BSSP' : 'DOKUMENTASI BSSP'} WEEK ${o.week}`); pdf.setCreator('Qcode · Dokumen GDSP');
+  printReady(PDFLib, pdf);
+  const fB = await pdf.embedFont(StandardFonts.TimesRomanBold), fI = await pdf.embedFont(StandardFonts.TimesRomanItalic);
+  const hR = await pdf.embedFont(StandardFonts.Helvetica), hB = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const PW = 595.28, PH = 841.89;
+  const black = rgb(0, 0, 0), grey = rgb(.5, .5, .5), navy = rgb(.122, .306, .471), zebra = rgb(.867, .922, .969), white = rgb(1, 1, 1), lineC = rgb(.55, .6, .66);
+  const fmt = n => n.toFixed(2).replace('.', ',');
+  const isSampah = s => s.jenis.trim().toUpperCase() === 'SAMPAH';
+  const secs = o.sections.filter(s => s.items.length).sort((a, b) => isSampah(a) - isSampah(b));
+  const fit = (t, font, size, maxW) => { t = winAnsi(t); if (font.widthOfTextAtSize(t, size) <= maxW) return t; while (t.length > 1 && font.widthOfTextAtSize(t + '..', size) > maxW) t = t.slice(0, -1); return t + '..'; };
+
+  /* ───── Bagian A: tabel BSSP dari Excel ───── */
+  if (o.bssp && o.bssp.rows.length) {
+    const ML = 36, TW = PW - ML * 2, MT = 40, MB = 52;
+    const cols = [['No', 'no', 20, 'c'], ['Tanggal', 'tanggal', 46, 'c'], ['Document', 'document', 50, 'c'], ['Kode Material', 'kode', 50, 'c'], ['Nama Barang', 'nama', 155, 'l'], ['Qty', 'qty', 34, 'c'], ['Recipient Stat', 'recipient', 60, 'l'], ['Change Stat', 'change', 54, 'l'], ['Keterangan', 'ket', TW - 469, 'l']];
+    const RH = 12.2, HH = 18, FS = 6.8;
+    let page, y;
+    const header = () => {
+      page.drawRectangle({ x: ML, y: y - HH, width: TW, height: HH, color: navy });
+      let x = ML;
+      for (const [label, , w] of cols) {
+        const t = fit(label, hB, 7, w - 4);
+        page.drawText(t, { x: x + (w - hB.widthOfTextAtSize(t, 7)) / 2, y: y - HH / 2 - 2.5, size: 7, font: hB, color: white });
+        x += w;
+      }
+      y -= HH;
+    };
+    const newTablePage = first => {
+      page = pdf.addPage([PW, PH]); y = PH - MT;
+      if (first) {
+        page.drawText('STOCK OPNAME SPAREPART BEKAS BSSP', { x: ML, y: y - 12, size: 13, font: hB, color: black });
+        page.drawText(`PLANT   ${winAnsi(o.plant)}`, { x: ML, y: y - 28, size: 9, font: hB });
+        page.drawText(`WEEK ${winAnsi(o.week)}     ${winAnsi(o.bssp.dari)}   S/D   ${winAnsi(o.bssp.sampai)}`, { x: ML, y: y - 41, size: 9, font: hB });
+        y -= 54;
+      }
+      header();
+    };
+    newTablePage(true);
+    o.bssp.rows.forEach((r, i) => {
+      if (y - RH < MB) newTablePage(false);
+      if (i % 2) page.drawRectangle({ x: ML, y: y - RH, width: TW, height: RH, color: zebra });
+      let x = ML;
+      for (const [, key, w, al] of cols) {
+        const t = fit(r[key], hR, FS, w - 5);
+        const tx = al === 'c' ? x + (w - hR.widthOfTextAtSize(t, FS)) / 2 : x + 3;
+        page.drawText(t, { x: tx, y: y - RH + 3.4, size: FS, font: hR, color: black });
+        page.drawLine({ start: { x, y }, end: { x, y: y - RH }, thickness: .4, color: lineC });
+        x += w;
+      }
+      page.drawLine({ start: { x: ML + TW, y }, end: { x: ML + TW, y: y - RH }, thickness: .4, color: lineC });
+      page.drawLine({ start: { x: ML, y: y - RH }, end: { x: ML + TW, y: y - RH }, thickness: .4, color: lineC });
+      y -= RH;
+    });
+
+    // Rekap timbang (selalu satu blok, tidak terpotong); TTD basah langsung di kertas
+    const rk = secs.map(s => ({ jenis: s.jenis, kg: s.items.reduce((a, i) => a + (Number(i.kg) || 0), 0) }));
+    const RW = [24, 170, 90, 90], RX = ML, RTW = RW.reduce((a, b) => a + b, 0), RRH = 15;
+    const blockH = (rk.length ? 26 + RRH * (rk.length + 1) : 0) + 10;
+    if (y - blockH < MB) { page = pdf.addPage([PW, PH]); y = PH - MT; } else y -= 18;
+    if (rk.length) {
+      page.drawText('REKAP TIMBANG SPAREPART BEKAS', { x: RX, y: y - 11, size: 10, font: hB, color: navy }); y -= 18;
+      const rowR = (vals, bold, fill) => {
+        if (fill) page.drawRectangle({ x: RX, y: y - RRH, width: RTW, height: RRH, color: fill });
+        let x = RX;
+        vals.forEach((v, k) => {
+          const f = bold ? hB : hR, t = winAnsi(v), sz = 8, col = fill === navy ? white : black;
+          const tx = k === 1 ? x + 5 : x + (RW[k] - f.widthOfTextAtSize(t, sz)) / 2;
+          page.drawText(t, { x: tx, y: y - RRH + 4.5, size: sz, font: f, color: col });
+          page.drawRectangle({ x, y: y - RRH, width: RW[k], height: RRH, borderColor: lineC, borderWidth: .5 });
+          x += RW[k];
+        });
+        y -= RRH;
+      };
+      rowR(['No', 'Jenis Barang', 'Timbang (KG)', 'Pembulatan (KG)'], true, navy);
+      rk.forEach((r, i) => rowR([String(i + 1), r.jenis, fmt(r.kg), String(Math.round(r.kg))], false, i % 2 ? zebra : null));
+    }
+  }
+
+  /* ───── Bagian B: dokumentasi timbangan (format contoh week 36) ───── */
+  if (secs.some(s => s.items.some(i => i.full || i.close))) {
+    const ML = 56.7, MT = 50, MB = 52, TW = PW - ML * 2, COL = TW / 2;
+    const PH_W = 198, PH_H = 264, ROW_H = PH_H + 8, TITLE_H = 22, TOTAL_H = 34, GAP = 16, LW = .75;
+    let page = pdf.addPage([PW, PH]), y = PH - MT;
+    const newPage = () => { page = pdf.addPage([PW, PH]); y = PH - MT; };
+    const fits = h => y - h >= MB;
+    const textC = (t, font, size, cy) => { t = winAnsi(t); let s = size; while (font.widthOfTextAtSize(t, s) > TW - 8 && s > 8) s -= .5; page.drawText(t, { x: ML + (TW - font.widthOfTextAtSize(t, s)) / 2, y: cy, size: s, font, color: black }); };
+    const cache = new Map();
+    const embed = async b => { if (!cache.has(b)) cache.set(b, await pdf.embedJpg(b)); return cache.get(b); };
+    for (let si = 0; si < secs.length; si++) {
+      const s = secs[si];
+      const top = y === PH - MT ? 0 : GAP;
+      if (!fits(top + TITLE_H + ROW_H)) newPage(); else y -= top;
+      textC(`${s.jenis.toUpperCase()} BEKAS SPAREPART PLANT ${o.plant} WEEK ${o.week}`, fB, 14, y - 15);
+      y -= TITLE_H;
+      for (const it of s.items) {
+        if (!fits(ROW_H)) newPage();
+        const yb = y - ROW_H;
+        page.drawRectangle({ x: ML, y: yb, width: TW, height: ROW_H, borderColor: black, borderWidth: LW });
+        page.drawLine({ start: { x: ML + COL, y: yb }, end: { x: ML + COL, y }, thickness: LW, color: black });
+        for (const [k, bytes] of [[0, it.full], [1, it.close]]) {
+          const cx = ML + k * COL;
+          if (bytes) {
+            const img = await embed(bytes), sc = Math.min(PH_W / img.width, PH_H / img.height), w = img.width * sc, h = img.height * sc;
+            page.drawImage(img, { x: cx + (COL - w) / 2, y: yb + (ROW_H - h) / 2, width: w, height: h });
+          } else {
+            const t = '(Foto tidak tersedia)';
+            page.drawText(t, { x: cx + (COL - fI.widthOfTextAtSize(t, 10)) / 2, y: yb + ROW_H / 2, size: 10, font: fI, color: grey });
+          }
+        }
+        y = yb;
+      }
+      if (!fits(TOTAL_H)) newPage();
+      const total = s.items.reduce((a, i) => a + (Number(i.kg) || 0), 0);
+      const line = s.items.length === 1 ? `${fmt(total)} Kg` : `${s.items.map(i => fmt(Number(i.kg) || 0)).join(' + ')} = ${fmt(total)} Kg`;
+      page.drawRectangle({ x: ML, y: y - TOTAL_H, width: TW, height: TOTAL_H, borderColor: black, borderWidth: LW });
+      textC(line, fB, 14, y - TOTAL_H / 2 - 5);
+      y -= TOTAL_H;
+    }
+  }
+
+  /* ───── Footer nomor halaman ───── */
+  const pages = pdf.getPages(), n = pages.length;
+  pages.forEach((p, i) => {
+    const t = `BSSP WEEK ${winAnsi(o.week)} - Plant ${winAnsi(o.plant)}`, r = `Halaman ${i + 1} dari ${n}`;
+    p.drawText(t, { x: 36, y: 22, size: 7.5, font: hR, color: grey });
+    p.drawText(r, { x: PW - 36 - hR.widthOfTextAtSize(r, 7.5), y: 22, size: 7.5, font: hR, color: grey });
+  });
+  return { bytes: await pdf.save(), pages: n };
+}
+
+/**
+ * Excel BSSP rapi (siap print): judul, tabel berwarna zebra, rekap di BAWAH tabel,
+ * A4 landscape, 1 halaman lebar, header berulang, nomor halaman. Tanpa TOTAL & tanpa kolom TTD.
+ * @param {object} ExcelJS
+ * @param {{plant:string, week:string, bssp:{dari:string,sampai:string,rows:object[]}, rekap:{jenis:string,kg:number}[]}} o
+ */
+async function buildBsspXlsx(ExcelJS, o) {
+  const wb = new ExcelJS.Workbook(); wb.creator = 'Qcode · Dokumen GDSP';
+  const ws = wb.addWorksheet(`BSSP W${o.week}`, {
+    pageSetup: { paperSize: 9, orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0, horizontalCentered: true,
+      margins: { left: .4, right: .4, top: .5, bottom: .6, header: .2, footer: .3 } },
+    headerFooter: { oddFooter: `&LBSSP WEEK ${o.week} - Plant ${o.plant}&RHalaman &P dari &N` },
+    views: [{ state: 'frozen', ySplit: 6 }],
+  });
+  const NAVY = 'FF1F4E78', ZEBRA = 'FFDDEBF7';
+  const thin = { style: 'thin', color: { argb: 'FF9AA8B8' } }, box = { top: thin, left: thin, bottom: thin, right: thin };
+  const cols = [['No', 'no', 5, 'center'], ['Tanggal', 'tanggal', 11, 'center'], ['Document', 'document', 12, 'center'], ['Kode Material', 'kode', 13, 'center'],
+    ['Nama Barang', 'nama', 44, 'left'], ['Qty', 'qty', 8, 'center'], ['Recipient Stat', 'recipient', 15, 'left'], ['Change Stat', 'change', 13, 'left'], ['Keterangan', 'ket', 18, 'left']];
+  ws.columns = cols.map(c => ({ key: c[1], width: c[2] }));
+  ws.getCell('A1').value = 'STOCK OPNAME SPAREPART BEKAS BSSP'; ws.getCell('A1').font = { name: 'Arial', size: 14, bold: true, color: { argb: NAVY } };
+  ws.getCell('A2').value = `PLANT   ${o.plant}`; ws.getCell('A3').value = `WEEK ${o.week}     ${o.bssp.dari}   S/D   ${o.bssp.sampai}`;
+  ['A2', 'A3'].forEach(a => ws.getCell(a).font = { name: 'Arial', size: 10, bold: true });
+  const H = 6, hr = ws.getRow(H);
+  cols.forEach((c, i) => {
+    const cell = hr.getCell(i + 1); cell.value = c[0];
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: NAVY } };
+    cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+    cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }; cell.border = box;
+  });
+  hr.height = 22;
+  o.bssp.rows.forEach((r, k) => {
+    const row = ws.getRow(H + 1 + k);
+    cols.forEach((c, i) => {
+      const cell = row.getCell(i + 1);
+      cell.value = c[1] === 'no' && /^\d+$/.test(r.no) ? Number(r.no) : r[c[1]];
+      cell.font = { name: 'Arial', size: 9 }; cell.border = box;
+      cell.alignment = { horizontal: c[3], vertical: 'middle', indent: c[3] === 'left' ? 1 : 0 };
+      if (k % 2) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ZEBRA } };
+    });
+  });
+  // Rekap di bawah tabel
+  let r0 = H + o.bssp.rows.length + 3;
+  if (o.rekap.length) {
+    ws.getCell(`A${r0}`).value = 'REKAP TIMBANG SPAREPART BEKAS'; ws.getCell(`A${r0}`).font = { name: 'Arial', size: 12, bold: true, color: { argb: NAVY } };
+    const h2 = r0 + 1;
+    // A = No, B:D = Jenis, E = Timbang, F:G = Pembulatan
+    const L = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const style = (rr, head, z) => L.forEach(c => { const x = ws.getCell(`${c}${rr}`); x.border = box;
+      x.font = { name: 'Arial', size: 10, bold: head, color: { argb: head ? 'FFFFFFFF' : 'FF000000' } };
+      x.alignment = { horizontal: !head && 'BCD'.includes(c) ? 'left' : 'center', vertical: 'middle', indent: !head && c === 'B' ? 1 : 0 };
+      if (head) x.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: NAVY } }; else if (z) x.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ZEBRA } }; });
+    const put = (rr, vals) => { ws.getCell(`A${rr}`).value = vals[0]; ws.getCell(`B${rr}`).value = vals[1]; ws.getCell(`E${rr}`).value = vals[2]; ws.getCell(`F${rr}`).value = vals[3]; ws.mergeCells(`B${rr}:D${rr}`); ws.mergeCells(`F${rr}:G${rr}`); };
+    put(h2, ['No', 'Jenis Barang', 'Timbang (KG)', 'Pembulatan (KG)']); style(h2, true);
+    o.rekap.forEach((q, i) => {
+      const rr = h2 + 1 + i;
+      put(rr, [i + 1, q.jenis, Math.round(q.kg * 100) / 100, { formula: `ROUND(E${rr},0)`, result: Math.round(q.kg) }]);
+      ws.getCell(`E${rr}`).numFmt = '#,##0.00'; ws.getCell(`F${rr}`).numFmt = '0'; style(rr, false, i % 2);
+    });
+    r0 = h2 + o.rekap.length;
+  }
+  ws.pageSetup.printArea = `A1:I${r0}`;
+  ws.pageSetup.printTitlesRow = `${H}:${H}`;
+  return new Uint8Array(await wb.xlsx.writeBuffer());
+}
+
+/** Gabung halaman scan jadi PDF A4 (portrait/landscape mengikuti halaman). */
+async function buildScanPdf(PDFLib, pages, title) {
+  const { PDFDocument } = PDFLib;
+  const pdf = await PDFDocument.create();
+  pdf.setTitle(title || 'Scan'); pdf.setCreator('Qcode · Dokumen GDSP');
+  printReady(PDFLib, pdf);
+  for (const p of pages) {
+    const land = p.w > p.h, PW = land ? 841.89 : 595.28, PH = land ? 595.28 : 841.89;
+    const img = await pdf.embedJpg(p.bytes);
+    const sc = Math.min(PW / img.width, PH / img.height), w = img.width * sc, h = img.height * sc;
+    pdf.addPage([PW, PH]).drawImage(img, { x: (PW - w) / 2, y: (PH - h) / 2, width: w, height: h });
+  }
+  return { bytes: await pdf.save(), pages: pdf.getPageCount() };
+}
+
+/* ═════════════════════════════════════════════════════════════
+   UI: FOTO MASSAL (tray)
+   ═════════════════════════════════════════════════════════════ */
+$('#trayBtn').onclick = () => $('#trayInput').click();
+$('#trayInput').onchange = async e => {
+  const files = [...e.target.files]; e.target.value = ''; if (!files.length) return;
+  overlay.show('Membaca foto…');
+  try {
+    for (let i = 0; i < files.length; i++) {
+      overlay.set(i / files.length, `Membaca foto ${i + 1} dari ${files.length}…`);
+      const bitmap = await loadBitmap(files[i]);
+      S.tray.push({ id: uid(), bitmap, thumb: thumbURL(bitmap), name: files[i].name, used: 0 });
+    }
+  } catch (err) { toast('Ada foto yang gagal dibaca: ' + err.message, 'err'); }
+  finally { overlay.hide(); renderTray(); }
+};
+function renderTray() {
+  $('#tray').innerHTML = S.tray.length ? S.tray.map(t => `
+    <div class="tp ${t.id === S.traySel ? 'sel' : ''} ${t.used ? 'used' : ''}" data-tid="${t.id}" title="${esc(t.name)}">
+      <img src="${t.thumb}" alt="">${t.used ? '<span class="ok">✓ dipakai</span>' : ''}
+      <button class="zm" data-tz="${t.id}" title="Lihat besar">${IC.zoom}</button><button class="rm" data-tr="${t.id}" title="Buang dari daftar">${IC.x}</button>
+    </div>`).join('') : '<span class="muted" style="font-size:12.5px;padding:6px 2px">Belum ada foto.</span>';
+  $('#pickBanner').classList.toggle('show', !!S.traySel);
+  $('#sections').classList.toggle('picking', !!S.traySel);
+}
+$('#tray').onclick = e => {
+  const z = e.target.closest('[data-tz]'), r = e.target.closest('[data-tr]'), t = e.target.closest('[data-tid]');
+  if (z) { const it = S.tray.find(x => x.id === z.dataset.tz); $('#viewImg').src = thumbURL(it.bitmap, 1400); $('#viewModal').classList.add('show'); return; }
+  if (r) { S.tray = S.tray.filter(x => x.id !== r.dataset.tr); if (S.traySel === r.dataset.tr) S.traySel = null; renderTray(); return; }
+  if (t) { S.traySel = S.traySel === t.dataset.tid ? null : t.dataset.tid; renderTray(); }
+};
+$('#pickCancel').onclick = e => { e.preventDefault(); S.traySel = null; renderTray(); };
+$('#viewClose').onclick = () => $('#viewModal').classList.remove('show');
+$('#viewModal').onclick = e => { if (e.target.id === 'viewModal') $('#viewModal').classList.remove('show'); };
+
+/* ═════════════════════════════════════════════════════════════
+   UI: POTONG FOTO MANUAL (3:4)
+   ═════════════════════════════════════════════════════════════ */
+const crop = { ph: null, src: null, scale: 1, r: null, onDone: null };
+function openCrop(ph, onDone) {
+  crop.ph = ph; crop.onDone = onDone; crop.src = rotatedCanvas(ph.bitmap, ph.rot);
+  const cv = $('#cropCanvas'), maxW = Math.min(window.innerWidth * .9, 720), maxH = window.innerHeight * .68;
+  crop.scale = Math.min(maxW / crop.src.width, maxH / crop.src.height);
+  cv.width = Math.round(crop.src.width * crop.scale); cv.height = Math.round(crop.src.height * crop.scale);
+  cv.getContext('2d').drawImage(crop.src, 0, 0, cv.width, cv.height);
+  const f = ph.crop || defaultCrop(crop.src.width, crop.src.height);
+  crop.r = { x: f.x * cv.width, y: f.y * cv.height, w: f.w * cv.width, h: f.h * cv.height };
+  drawCrop(); $('#cropModal').classList.add('show');
+}
+function drawCrop() { const r = crop.r, el = $('#cropRect'); Object.assign(el.style, { left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px' }); }
+(() => {
+  let mode = null, sx = 0, sy = 0, start = null;
+  const cv = $('#cropCanvas');
+  const down = (m, e) => { mode = m; sx = e.clientX; sy = e.clientY; start = { ...crop.r }; e.preventDefault(); e.stopPropagation(); document.addEventListener('pointermove', move); document.addEventListener('pointerup', up, { once: true }); };
+  const move = e => {
+    const dx = e.clientX - sx, dy = e.clientY - sy, W = cv.width, H = cv.height, r = crop.r;
+    if (mode === 'move') { r.x = Math.min(Math.max(0, start.x + dx), W - r.w); r.y = Math.min(Math.max(0, start.y + dy), H - r.h); }
+    else { // ubah ukuran dengan rasio tetap 3:4
+      let w = Math.max(40, start.w + Math.max(dx, dy * .75));
+      w = Math.min(w, W - start.x, (H - start.y) * .75);
+      r.w = w; r.h = w / .75;
+    }
+    drawCrop();
+  };
+  const up = () => { mode = null; document.removeEventListener('pointermove', move); };
+  $('#cropRect').addEventListener('pointerdown', e => down('move', e));
+  $('#cropHd').addEventListener('pointerdown', e => down('resize', e));
+})();
+$('#cropReset').onclick = () => { const cv = $('#cropCanvas'), f = defaultCrop(crop.src.width, crop.src.height); crop.r = { x: f.x * cv.width, y: f.y * cv.height, w: f.w * cv.width, h: f.h * cv.height }; drawCrop(); };
+$('#cropCancel').onclick = () => $('#cropModal').classList.remove('show');
+$('#cropOk').onclick = async () => {
+  const cv = $('#cropCanvas'), r = crop.r;
+  crop.ph.crop = { x: r.x / cv.width, y: r.y / cv.height, w: r.w / cv.width, h: r.h / cv.height };
+  $('#cropModal').classList.remove('show');
+  overlay.show('Memotong foto…');
+  try { await preparePhoto(crop.ph, $('#dBright').value === '1'); crop.onDone?.(); } finally { overlay.hide(); }
+};
+
+/* ═════════════════════════════════════════════════════════════
+   UI: JENIS BARANG & TIMBANGAN
+   ═════════════════════════════════════════════════════════════ */
+const newItem = () => ({ id: uid(), kg: '', full: null, close: null }); // full/close: {bitmap, rot, crop, bytes, url, trayId}
+
+function addSection(jenis) {
+  jenis = String(jenis || '').trim().toUpperCase(); if (!jenis) return;
+  if (S.doc.sections.some(s => s.jenis === jenis)) { toast(`${jenis} sudah ada`); return; }
+  S.doc.sections.push({ id: uid(), jenis, items: [newItem()] }); renderSections();
+}
+$('#dAddSec').onclick = () => { let v = $('#dJenisSel').value; if (v === '__custom') v = prompt('Nama jenis barang (mis. TABUNG FREON):') || ''; addSection(v); };
+const sectionTotal = s => s.items.reduce((a, i) => a + parseKg(i.kg), 0);
+
+function renderSections() {
+  const box = $('#sections');
+  box.innerHTML = !S.doc.sections.length
+    ? '<div class="card empty">Belum ada jenis barang. Pilih jenis di atas lalu klik <b>Tambah</b>.</div>'
+    : S.doc.sections.map(s => `
+      <div class="sec-card" data-sec="${s.id}">
+        <div class="sec-head">
+          <b>${esc(s.jenis)}</b>${s.jenis === 'SAMPAH' ? ' <span class="badge b-amber">paling bawah di PDF</span>' : ''}
+          <span class="sec-total">${fmtKg(sectionTotal(s))} Kg</span>
+          <button class="btn ghost sm" data-act="addItem">${IC.plus}Timbangan</button>
+          <button class="icon-btn" data-act="delSec" title="Hapus jenis">${IC.trash}</button>
+        </div>
+        ${s.items.map((it, i) => `
+          <div class="weigh" data-item="${it.id}">
+            <div class="no">#${i + 1}</div>
+            ${slotHTML(it, 'full', 'Foto barang')}
+            ${slotHTML(it, 'close', 'Close-up timbangan')}
+            <div class="field kgbox"><label>Berat (kg)</label><input class="input" inputmode="decimal" data-act="kg" value="${esc(it.kg)}" placeholder="0,00"></div>
+            <button class="icon-btn" data-act="delItem" title="Hapus timbangan">${IC.x}</button>
+          </div>`).join('')}
+      </div>`).join('');
+  updateGrand();
+}
+function slotHTML(it, key, label) {
+  const p = it[key];
+  if (!p) return `<div class="slot" data-act="pick" data-key="${key}"><div class="ph">${IC.cam}<span>${label}</span><small>ketuk untuk pilih</small></div></div>`;
+  return `<div class="slot" data-act="pick" data-key="${key}"><img src="${p.url}" alt=""><span class="cap">${label}</span>
+    <div class="tools"><button data-act="rot" data-dir="3" data-key="${key}" title="Putar kiri">${IC.rotL}</button><button data-act="rot" data-dir="1" data-key="${key}" title="Putar kanan">${IC.rotR}</button><button data-act="crop" data-key="${key}" title="Potong manual">${IC.crop}</button><button data-act="clr" data-key="${key}" title="Hapus foto">${IC.x}</button></div></div>`;
+}
+function updateGrand() {
+  $('#dGrand').textContent = fmtKg(S.doc.sections.reduce((a, s) => a + sectionTotal(s), 0)) + ' Kg';
+  $$('.sec-card').forEach(el => { const s = S.doc.sections.find(x => x.id === el.dataset.sec); if (s) $('.sec-total', el).textContent = fmtKg(sectionTotal(s)) + ' Kg'; });
+}
+const trayUse = (id, d) => { const t = S.tray.find(x => x.id === id); if (t) t.used = Math.max(0, t.used + d); };
+
+let pickTarget = null;
+$('#sections').addEventListener('click', async e => {
+  const actEl = e.target.closest('[data-act]'); if (!actEl) return;
+  const act = actEl.dataset.act; if (act === 'kg') return;
+  const s = S.doc.sections.find(x => x.id === e.target.closest('[data-sec]')?.dataset.sec);
+  const it = s?.items.find(x => x.id === e.target.closest('[data-item]')?.dataset.item);
+  e.stopPropagation();
+  const key = actEl.dataset.key, bright = $('#dBright').value === '1';
+  if (act === 'addItem') { s.items.push(newItem()); renderSections(); }
+  else if (act === 'delSec') { if (confirm(`Hapus jenis ${s.jenis}?`)) { s.items.forEach(i => ['full', 'close'].forEach(k => i[k]?.trayId && trayUse(i[k].trayId, -1))); S.doc.sections = S.doc.sections.filter(x => x !== s); renderSections(); renderTray(); } }
+  else if (act === 'delItem') { ['full', 'close'].forEach(k => it[k]?.trayId && trayUse(it[k].trayId, -1)); s.items = s.items.filter(x => x !== it); if (!s.items.length) s.items.push(newItem()); renderSections(); renderTray(); }
+  else if (act === 'pick') {
+    if (S.traySel) { // pakai foto dari tray
+      const t = S.tray.find(x => x.id === S.traySel);
+      if (it[key]?.trayId) trayUse(it[key].trayId, -1);
+      overlay.show('Menyiapkan foto…');
+      try { it[key] = await preparePhoto({ bitmap: t.bitmap, rot: 0, crop: null, trayId: t.id }, bright); t.used++; }
+      finally { overlay.hide(); }
+      S.traySel = null; renderSections(); renderTray();
+    } else { pickTarget = { it, key }; $('#photoInput').value = ''; $('#photoInput').click(); }
+  }
+  else if (act === 'clr') { if (it[key]?.trayId) trayUse(it[key].trayId, -1); it[key] = null; renderSections(); renderTray(); }
+  else if (act === 'rot') {
+    const p = it[key]; p.rot = (p.rot + Number(actEl.dataset.dir || 1)) % 4; p.crop = null;
+    overlay.show('Memutar foto…'); try { await preparePhoto(p, bright); renderSections(); } finally { overlay.hide(); }
+  }
+  else if (act === 'crop') openCrop(it[key], renderSections);
+});
+$('#sections').addEventListener('input', e => {
+  if (e.target.dataset.act !== 'kg') return;
+  const s = S.doc.sections.find(x => x.id === e.target.closest('[data-sec]').dataset.sec);
+  s.items.find(x => x.id === e.target.closest('[data-item]').dataset.item).kg = e.target.value; updateGrand();
+});
+$('#photoInput').onchange = async e => {
+  const f = e.target.files[0]; if (!f || !pickTarget) return;
+  overlay.show('Menyiapkan foto…');
+  try { pickTarget.it[pickTarget.key] = await preparePhoto({ bitmap: await loadBitmap(f), rot: 0, crop: null }, $('#dBright').value === '1'); renderSections(); }
+  catch (err) { toast('Foto gagal dibaca: ' + err.message, 'err'); }
+  finally { overlay.hide(); }
+};
+$('#dReset').onclick = () => {
+  if (!confirm('Kosongkan semua isian (Excel, foto, timbangan)?')) return;
+  S.doc = { sections: [], bssp: null }; S.tray = []; S.traySel = null;
+  $('#dResult').classList.remove('show'); renderXl(); renderTray(); renderSections();
+};
+
+$('#dBuild').onclick = async () => {
+  const week = $('#dWeek').value.trim(), plant = $('#dPlant').value.trim() || S.settings.plant;
+  if (!week) { toast('Isi Week dulu', 'err'); $('#dWeek').focus(); return; }
+  const withTable = $('#dMode').value === 'all' && S.doc.bssp;
+  const secs = S.doc.sections.map(s => ({ jenis: s.jenis, items: s.items.filter(i => parseKg(i.kg) > 0 || i.full || i.close) })).filter(s => s.items.length);
+  if (!secs.length && !withTable) { toast('Belum ada timbangan yang diisi', 'err'); return; }
+  if (S.doc.bssp && S.doc.bssp.week && String(S.doc.bssp.week) !== week && !confirm(`Week di Excel (${S.doc.bssp.week}) beda dengan week yang diisi (${week}). Tetap lanjut?`)) return;
+  const noKg = secs.flatMap(s => s.items.filter(i => !(parseKg(i.kg) > 0)).map(() => s.jenis));
+  if (noKg.length && !confirm(`Ada ${noKg.length} timbangan tanpa berat (${[...new Set(noKg)].join(', ')}). Tetap lanjut?`)) return;
+  overlay.show('Menyusun PDF…');
+  try {
+    await sleep(30);
+    const res = await buildBsspPdf(PDFLib, {
+      plant, week, bssp: withTable ? S.doc.bssp : null,
+      sections: secs.map(s => ({ jenis: s.jenis, items: s.items.map(i => ({ kg: parseKg(i.kg), full: i.full?.bytes, close: i.close?.bytes })) })),
+    });
+    const detail = {}; secs.forEach(s => detail[s.jenis] = Math.round(s.items.reduce((a, i) => a + parseKg(i.kg), 0) * 100) / 100);
+    const totalKg = Math.round(Object.values(detail).reduce((a, b) => a + b, 0) * 100) / 100;
+    S.dPdf = { ...res, name: `${withTable ? 'BSSP' : 'DOKUMENTASI_BSSP'}_WEEK_${week}.pdf`, week, totalKg, detail, type: 'DOKUMENTASI',
+      xl: withTable ? { plant, week, bssp: S.doc.bssp, rekap: secs.slice().sort((a, b) => (a.jenis === 'SAMPAH') - (b.jenis === 'SAMPAH')).map(x => ({ jenis: x.jenis, kg: detail[x.jenis] })) } : null };
+    $('#dXlsx').style.display = withTable ? '' : 'none';
+    showResult('d', S.dPdf);
+  } catch (err) { toast('Gagal membuat PDF: ' + err.message, 'err'); console.error(err); }
+  finally { overlay.hide(); }
+};
+
+/* ═════════════════════════════════════════════════════════════
+   UI: RAPIKAN & GABUNG SCAN
+   ═════════════════════════════════════════════════════════════ */
+if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+$('#sName').value = `SCAN_${todayStr()}`;
+const drop = $('#drop');
+drop.onclick = () => $('#scanInput').click();
+drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); addScanFiles([...e.dataTransfer.files]); };
+$('#scanInput').onchange = e => { addScanFiles([...e.target.files]); e.target.value = ''; };
+$('#sWeek').oninput = () => { const w = $('#sWeek').value.trim(); if (w && /^SCAN_/.test($('#sName').value)) $('#sName').value = `BSSP_WEEK_${w}_TTD`; };
+
+async function addScanFiles(files) {
+  files = files.filter(f => /^image\//.test(f.type) || f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
+  if (!files.length) return;
+  overlay.show('Membaca file…');
+  try {
+    let done = 0;
+    for (const f of files) {
+      if (f.type === 'application/pdf' || /\.pdf$/i.test(f.name)) {
+        if (!window.pdfjsLib) throw new Error('Pembaca PDF belum termuat, cek koneksi internet.');
+        const doc = await pdfjsLib.getDocument({ data: new Uint8Array(await f.arrayBuffer()) }).promise;
+        for (let i = 1; i <= doc.numPages; i++) {
+          const pg = await doc.getPage(i), v1 = pg.getViewport({ scale: 1 });
+          const vp = pg.getViewport({ scale: (v1.width > v1.height ? 2339 : 1654) / v1.width }); // ±200 dpi
+          const c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+          const cx = c.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, c.width, c.height);
+          await pg.render({ canvasContext: cx, viewport: vp }).promise;
+          S.scan.pages.push({ id: uid(), canvas: c, rot: 0, src: `${f.name} · hal ${i}`, fromPdf: true });
+          overlay.set((done + i / doc.numPages) / files.length, `Membaca ${f.name} (${i}/${doc.numPages})`);
+        }
+      } else {
+        const bmp = await loadBitmap(f), c = document.createElement('canvas'); c.width = bmp.width; c.height = bmp.height; c.getContext('2d').drawImage(bmp, 0, 0);
+        S.scan.pages.push({ id: uid(), canvas: c, rot: 0, src: f.name });
+      }
+      done++; overlay.set(done / files.length);
+    }
+  } catch (err) { toast('Gagal membaca file: ' + err.message, 'err'); }
+  finally { overlay.hide(); renderThumbs(); }
+}
+function renderThumbs() {
+  const box = $('#thumbs'); box.innerHTML = '';
+  S.scan.pages.forEach((p, i) => {
+    const el = document.createElement('div'); el.className = 'thumb'; el.dataset.id = p.id;
+    const t = rotatedCanvas(p.canvas, p.rot), k = 300 / Math.max(t.width, t.height), c = document.createElement('canvas');
+    c.width = Math.round(t.width * k); c.height = Math.round(t.height * k); c.getContext('2d').drawImage(t, 0, 0, c.width, c.height);
+    el.appendChild(c);
+    el.insertAdjacentHTML('beforeend', `<span class="n">${i + 1}</span>
+      <div class="acts"><button data-a="left" title="Geser ke kiri">${IC.left}</button><button data-a="rotL" title="Putar kiri">${IC.rotL}</button><button data-a="rotR" title="Putar kanan">${IC.rotR}</button><button data-a="right" title="Geser ke kanan">${IC.right}</button><button data-a="del" title="Hapus">${IC.x}</button></div>
+      <div class="src" title="${esc(p.src)}">${esc(p.src)}</div>`);
+    box.appendChild(el);
+  });
+  $('#sCount').textContent = S.scan.pages.length; $('#sEmpty').style.display = S.scan.pages.length ? 'none' : '';
+}
+$('#thumbs').onclick = e => {
+  const b = e.target.closest('[data-a]'); if (!b) return;
+  const arr = S.scan.pages, i = arr.findIndex(p => p.id === b.closest('.thumb').dataset.id), a = b.dataset.a;
+  if (a === 'left' && i > 0) [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]];
+  else if (a === 'right' && i < arr.length - 1) [arr[i + 1], arr[i]] = [arr[i], arr[i + 1]];
+  else if (a === 'rotL') arr[i].rot = (arr[i].rot + 3) % 4;
+  else if (a === 'rotR') arr[i].rot = (arr[i].rot + 1) % 4;
+  else if (a === 'del') arr.splice(i, 1);
+  renderThumbs();
+};
+$('#sClear').onclick = () => { if (S.scan.pages.length && confirm('Hapus semua halaman?')) { S.scan.pages = []; renderThumbs(); $('#sResult').classList.remove('show'); } };
+$('#sBuild').onclick = async () => {
+  if (!S.scan.pages.length) { toast('Tambahkan file dulu', 'err'); return; }
+  const name = ($('#sName').value.trim() || `SCAN_${todayStr()}`).replace(/\.pdf$/i, '') + '.pdf', mode = $('#sMode').value;
+  overlay.show('Merapikan halaman…');
+  try {
+    const out = [];
+    for (let i = 0; i < S.scan.pages.length; i++) {
+      overlay.set(i / S.scan.pages.length, `Merapikan halaman ${i + 1} dari ${S.scan.pages.length}…`); await sleep(15);
+      out.push(await processScanPage(S.scan.pages[i], mode, $('#sNoWm').checked));
+    }
+    overlay.set(1, 'Menggabungkan PDF…');
+    const res = await buildScanPdf(PDFLib, out, name.replace(/\.pdf$/, ''));
+    S.sPdf = { ...res, name, week: $('#sWeek').value.trim(), totalKg: null, type: 'SCAN' };
+    showResult('s', S.sPdf);
+  } catch (err) { toast('Gagal memproses: ' + err.message, 'err'); }
+  finally { overlay.hide(); }
+};
+
+/* ═════════════════════════════════════════════════════════════
+   HASIL: preview, print, unduh, simpan ke Drive
+   ═════════════════════════════════════════════════════════════ */
+const blobUrls = {};
+function showResult(p, r) {
+  if (blobUrls[p]) URL.revokeObjectURL(blobUrls[p]);
+  const url = blobUrls[p] = URL.createObjectURL(new Blob([r.bytes], { type: 'application/pdf' }));
+  $(`#${p}Preview`).src = url;
+  const dl = $(`#${p}Download`); dl.href = url; dl.download = r.name;
+  $(`#${p}ResName`).textContent = `${r.name} · ${r.pages} halaman · ${(r.bytes.length / 1048576).toFixed(1)} MB`;
+  $(`#${p}Result`).classList.add('show'); $(`#${p}Result`).scrollIntoView({ behavior: 'smooth' });
+  toast('PDF siap. Bisa langsung Print, Unduh, atau Simpan ke Drive.', 'ok');
+}
+/** Print langsung: PDF sudah A4 + "ukuran asli", jadi tidak perlu atur apa-apa. */
+function printPdf(p) {
+  const url = blobUrls[p]; if (!url) return;
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { window.open(url, '_blank'); toast('Di HP: buka PDF lalu pilih Print/Bagikan → Print'); return; }
+  let f = $('#printFrame');
+  if (!f) { f = document.createElement('iframe'); f.id = 'printFrame'; f.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0'; document.body.appendChild(f); }
+  f.onload = () => setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch { window.open(url, '_blank'); } }, 300);
+  f.src = url;
+}
+$('#dPrint').onclick = () => printPdf('d');
+$('#dXlsx').onclick = async () => {
+  const x = S.dPdf?.xl; if (!x) return;
+  if (!window.ExcelJS) { toast('Pembuat Excel belum termuat, cek koneksi internet.', 'err'); return; }
+  try {
+    const bytes = await buildBsspXlsx(ExcelJS, x);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+    a.download = `BSSP_WEEK_${x.week}.xlsx`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast('Excel rapi diunduh (A4 landscape, siap print)', 'ok');
+  } catch (e) { toast('Gagal membuat Excel: ' + e.message, 'err'); }
+};
+$('#sPrint').onclick = () => printPdf('s');
+
+function toBase64(bytes) { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); }
+async function saveToDrive(r) {
+  if (!r) return;
+  overlay.show('Menyimpan ke Google Drive…'); overlay.set(.4);
+  try {
+    const res = await api('saveFile', { name: r.name, base64: toBase64(r.bytes), type: r.type, week: r.week, pages: r.pages, totalKg: r.totalKg, detail: r.detail || null });
+    toast(res.demo ? 'Mode demo: tercatat di riwayat browser (belum ke Drive)' : 'Tersimpan di Drive ✓', 'ok');
+    if (res.url) window.open(res.url, '_blank');
+    loadData();
+  } catch (err) { toast('Gagal menyimpan: ' + err.message, 'err'); }
+  finally { overlay.hide(); }
+}
+$('#dSave').onclick = () => saveToDrive(S.dPdf);
+$('#sSave').onclick = () => saveToDrive(S.sPdf);
+
+/* ═════════════════════════════════════════════════════════════
+   INIT
+   ═════════════════════════════════════════════════════════════ */
+const ONLINE = HAS_GAS || USE_API;
+$('#modeLabel').textContent = ONLINE ? 'Terhubung Drive' : 'Demo (lokal)';
+$('#sideFoot').classList.toggle('demo', !ONLINE);
+$('#sideFoot').title = ONLINE ? 'Terhubung ke Google Drive' : 'Mode demo (lokal)';
+if (!USE_API) $('#keyField').style.display = 'none';
+$('#setKey').value = getKey();
+$('#setKeyBtn').onclick = () => { setKey($('#setKey').value.trim()); toast('Kunci akses disimpan di browser ini', 'ok'); loadData(); };
+$('#todayLabel').textContent = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+$('#pageSub').textContent = PAGES.dashboard[1];
+renderXl(); renderTray(); renderSections(); renderThumbs();
+loadData();
+</script>
+</body>
+</html>
