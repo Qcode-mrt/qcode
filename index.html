@@ -956,6 +956,50 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 @keyframes bfL{from{transform:scaleX(1) rotate(6deg)}to{transform:scaleX(.25) rotate(-4deg)}}
 @media (max-width:640px){.cv-quote{padding-left:28px}.sig-t{font-size:32px}}
 
+
+/* ================= RAK LEMARI KAYU (galeri per zona) ================= */
+.cabinet{--ink:#2B1A12;--muted:#6B5440;--line:#E2D2B6;position:relative;margin-top:44px;padding:30px 20px 26px;border-radius:22px;
+  background:linear-gradient(180deg,#B0713F 0%,#8A5530 40%,#5C3419 100%);
+  box-shadow:0 34px 60px -30px rgb(40 20 10 / .7),inset 0 2px 0 rgb(255 255 255 / .2),inset 0 -4px 0 rgb(0 0 0 / .3),inset 3px 0 0 rgb(255 255 255 / .06),inset -3px 0 0 rgb(0 0 0 / .2)}
+.cabinet::before{content:"RAK APLIKASI";position:absolute;top:-15px;left:50%;translate:-50% 0;padding:7px 22px;border-radius:9px;background:linear-gradient(180deg,#F8DE98,#C9963F);color:#4E2C17;font:800 13px/1 var(--f-display);letter-spacing:.22em;box-shadow:0 6px 12px -4px rgb(0 0 0 / .5),inset 0 1px 0 rgb(255 255 255 / .6);border:1px solid #9C6F27}
+.cabinet::after{content:"";position:absolute;left:28px;right:28px;bottom:-14px;height:14px;background:radial-gradient(circle at 18px 0,#3A200E 12px,transparent 13px) left/50% 100% no-repeat,radial-gradient(circle at calc(100% - 18px) 0,#3A200E 12px,transparent 13px) right/50% 100% no-repeat}
+.cabinet .rail{position:relative;margin:0 0 30px;padding:16px 18px 0;border-radius:12px;
+  background:radial-gradient(120% 70% at 50% 0,rgb(255 196 120 / .2),transparent 60%),repeating-linear-gradient(90deg,rgb(255 255 255 / .025) 0 3px,transparent 3px 26px),linear-gradient(180deg,#22130B,#3B2416);
+  box-shadow:inset 0 12px 20px rgb(0 0 0 / .5),inset 0 -2px 0 rgb(0 0 0 / .3)}
+.cabinet .rail:last-child{margin-bottom:12px}
+/* Lemari berkompartemen: beberapa zona berdampingan supaya rak tidak kosong */
+.cabinet{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,430px),1fr));gap:34px 18px}
+.cabinet .rail,.cabinet .rail:last-child{margin:0}
+.cabinet .sec-h{flex-wrap:wrap;row-gap:4px}
+.cabinet .sec-h h2{font-size:22px}
+.cabinet .rail-track{grid-auto-columns:minmax(180px,200px)}
+.cabinet .tile-m{flex-wrap:wrap;row-gap:4px}
+.cabinet .tile-t h3{font-size:14.5px}
+/* Papan rak (tempat aplikasi berdiri) */
+.cabinet .rail::after{content:"";position:absolute;left:-10px;right:-10px;bottom:-16px;height:24px;border-radius:5px;background:linear-gradient(180deg,#D99A62 0,#B07240 30%,#7E4A24 70%,#5A3216);box-shadow:0 10px 14px -6px rgb(0 0 0 / .6),inset 0 2px 0 rgb(255 255 255 / .25)}
+.cabinet .sec-h h2{color:#FFE9C7}
+.cabinet .sec-h small{color:#D9BE97}
+.cabinet .sec-h::after{background:rgb(255 255 255 / .12)}
+.cabinet .link-btn{color:#FFC56B}
+.cabinet .link-btn:hover{background:rgb(255 197 107 / .12)}
+.cabinet .rail-arrow{background:rgb(255 255 255 / .08);border-color:rgb(255 255 255 / .22);color:#FFE9C7}
+.cabinet .rail-arrow:hover{border-color:#FFC56B;color:#FFC56B}
+.cabinet .rail-track{padding:6px 4px 26px;scrollbar-color:rgb(255 255 255 / .25) transparent}
+/* Aplikasi = bingkai foto krem yang berdiri di papan rak */
+.cabinet .tile{background:#FFF8EC;padding:8px 8px 10px;border-radius:12px;border:2px solid #E9D9BE;box-shadow:0 8px 0 -3px rgb(0 0 0 / .22),0 20px 22px -12px rgb(0 0 0 / .7);transform-origin:50% 100%;transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s}
+.cabinet .tile:hover,.cabinet .tile:focus-within{transform:translateY(-8px) rotate(-1.2deg);box-shadow:0 8px 0 -3px rgb(0 0 0 / .2),0 30px 30px -14px rgb(0 0 0 / .75)}
+.cabinet .tile .card-cover{border-radius:8px;border:1px solid #D9C6A4;box-shadow:inset 0 0 0 3px #fff}
+.cabinet .tile .card-cover:hover{transform:none;box-shadow:inset 0 0 0 3px #fff}
+.cabinet .tile-t h3{color:#2B1A12}
+.cabinet .tile .icon-btn{color:#6B5440}
+@media (max-width:640px){
+  .cabinet{padding:26px 10px 20px;border-radius:18px;margin-top:36px}
+  .cabinet .rail{padding:12px 10px 0}
+  .cabinet{gap:30px}
+  .cabinet .rail-track{grid-auto-columns:72%}
+  .cabinet .rail::after{left:-6px;right:-6px}
+}
+
 /* ================= STUDIO POSTER ================= */
 .poster-btn .mi{width:15px;height:15px;display:inline-grid;place-items:center}
 dialog.wide{width:min(1060px,calc(100% - 32px))}
@@ -1769,12 +1813,15 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       if (!state.q && state.area === 'all') {
         // Mode galeri: sorotan besar + baris favorit + baris per zona
         out.push(spotlight(list));
+        // Rak lemari kayu: tiap zona = satu tingkat rak, aplikasi dipajang seperti bingkai foto
+        const shelves = [];
         const favs = list.filter(a => state.fav.has(a.id));
-        if (favs.length) out.push(rail('Favorit', `${favs.length} aplikasi`, favs, 'starOn', 'var(--accent-2)'));
+        if (favs.length) shelves.push(rail('Favorit', `${favs.length} aplikasi`, favs, 'starOn', 'var(--accent-2)'));
         Object.entries(AREAS).forEach(([k, z]) => {
           const apps = list.filter(a => a.area === k);
-          if (apps.length) out.push(rail(`${z.label} · ${z.zone}`, `${apps.length} aplikasi`, apps, k, areaColor(k), k));
+          if (apps.length) shelves.push(rail(`${z.label} · ${z.zone}`, `${apps.length} aplikasi`, apps, k, areaColor(k), k));
         });
+        if (shelves.length) out.push(h('div', {class:'cabinet', role:'group', 'aria-label':'Rak aplikasi'}, ...shelves));
       } else {
         // Pencarian / halaman zona: kartu lengkap dalam grid
         const z = AREAS[state.area];
