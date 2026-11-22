@@ -1150,6 +1150,13 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 @keyframes hkGlow{from{opacity:.75}to{opacity:1}}
 @keyframes hkType{0%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 
+/* HP: hacker lebih ramping & diberi ruang supaya tidak menabrak kata mutiara */
+@media (max-width:640px){
+  .cover[data-sky="malam"] .scene-prop{margin-top:110px}
+  .hk-wrap{width:88%;bottom:104px}
+  .hk-say{font-size:12px;padding:6px 10px;max-width:180px;translate:-30% 0}
+  .hk-fists{width:46%;bottom:0}
+}
 /* ================= STUDIO POSTER ================= */
 .poster-btn .mi{width:15px;height:15px;display:inline-grid;place-items:center}
 dialog.wide{width:min(1060px,calc(100% - 32px))}
