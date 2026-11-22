@@ -1000,6 +1000,50 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
   .cabinet .rail::after{left:-6px;right:-6px}
 }
 
+
+/* ================= PILIH GAYA + KORAN ================= */
+.view-sw{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-top:22px;flex-wrap:wrap}
+.vs-lbl{font:600 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.view-sw button{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.view-sw button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.paper{--pi:#1D1B17;margin-top:14px;padding:26px 32px 30px;border-radius:4px;color:var(--pi);font-family:Georgia,'Times New Roman',serif;
+  background:#F6F0E2;background-image:radial-gradient(rgb(120 100 60 / .06) 1px,transparent 1px);background-size:5px 5px;box-shadow:0 1px 0 #E2D7C0,0 24px 44px -26px rgb(40 30 10 / .45)}
+.mast{text-align:center;border-bottom:4px double var(--pi);padding-bottom:12px}
+.mast-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:600 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--pi);padding-bottom:8px}
+.mast-title{margin:10px 0 2px;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:clamp(44px,7.2vw,96px);line-height:1;letter-spacing:-.01em;color:var(--pi)}
+.mast-sub{margin:0;font-style:italic;font-size:14.5px;color:#4A4437}
+.paper .card-cover{height:auto;aspect-ratio:16/10;border-radius:0;border:1px solid var(--pi);filter:grayscale(1) contrast(1.08);transition:filter .45s ease}
+.paper article:hover .card-cover,.paper article:focus-within .card-cover{filter:none}
+.lead{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:26px;padding:22px 0;border-bottom:1px solid var(--pi);align-items:start}
+.lead h3{margin:6px 0 10px;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:clamp(30px,3.6vw,50px);line-height:1.04}
+.lead .deck{margin:0;font-size:17px;line-height:1.6}
+.lead .deck::first-letter{float:left;font:400 62px/.82 'DM Serif Display',Georgia,serif;padding:6px 8px 0 0}
+.byline{margin:12px 0 14px;font:500 11.5px var(--f-mono);letter-spacing:.06em;color:#5A5243;text-transform:uppercase}
+.n-kick{margin:8px 0 0;font:700 10.5px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--c) 75%,#000)}
+.sections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:26px;margin-top:20px}
+.sec-col{padding:0 18px;border-left:1px solid #CFC4AB;min-width:0}
+.sec-col:nth-child(3n+1){border-left:0;padding-left:0}
+.sec-col:nth-child(3n){padding-right:0}
+.sec-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:3px solid var(--pi);border-bottom:1px solid var(--pi);padding:6px 0;margin-bottom:12px;font:800 13px/1.2 var(--f-display);letter-spacing:.16em;text-transform:uppercase}
+.n-more{border:0;background:none;font:600 11px var(--f-mono);letter-spacing:.04em;color:var(--pi);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+.news{padding-bottom:14px;margin-bottom:14px;border-bottom:1px dotted #B4A88E}
+.news:last-child{border-bottom:0;margin-bottom:0}
+.news h3{margin:4px 0 6px;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:21px;line-height:1.15}
+.n-deck{margin:0;font-size:14px;line-height:1.55;color:#3A362E}
+.n-act{display:flex;align-items:center;gap:6px;margin-top:8px}
+.n-act .sp{flex:1}
+.n-read{border:0;background:none;padding:6px 0;font:700 12.5px var(--f-sans,inherit);color:var(--pi);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.paper .icon-btn{color:#4A4437}
+@media (max-width:860px){.sections{grid-template-columns:repeat(2,minmax(0,1fr))}.sec-col:nth-child(3n+1){border-left:1px solid #CFC4AB;padding-left:18px}.sec-col:nth-child(2n+1){border-left:0;padding-left:0}.sec-col:nth-child(3n){padding-right:18px}}
+@media (max-width:640px){
+  .paper{padding:18px 14px 22px}
+  .lead{grid-template-columns:minmax(0,1fr);gap:14px}
+  .sections{grid-template-columns:minmax(0,1fr)}
+  .sec-col,.sec-col:nth-child(n){border-left:0;padding:0}
+  .mast-top span:last-child{display:none}
+  .view-sw{justify-content:flex-start}
+}
+
 /* ================= STUDIO POSTER ================= */
 .poster-btn .mi{width:15px;height:15px;display:inline-grid;place-items:center}
 dialog.wide{width:min(1060px,calc(100% - 32px))}
@@ -1788,6 +1832,62 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       track);
   };
 
+
+  /* ===== 7c. GAYA TAMPILAN: Galeri · Lemari · Koran (percobaan, disimpan per perangkat) ===== */
+  const VIEWS = [['koran','Koran'],['lemari','Lemari'],['galeri','Galeri']];
+  let view = ls.get('qcode.view', 'koran');
+  const viewSwitch = () => h('div', {class:'view-sw', role:'radiogroup', 'aria-label':'Gaya tampilan'},
+    h('span', {class:'vs-lbl'}, 'Gaya tampilan'),
+    ...VIEWS.map(([k, l]) => h('button', {type:'button', role:'radio', 'aria-checked':String(view === k), class:view === k ? 'on' : '',
+      onclick:() => { view = k; ls.set('qcode.view', k); render(); }}, l)));
+
+  // Koran: kepala surat kabar + berita utama + kolom per zona
+  const newsItem = (a) => {
+    const hasUrl = safeHttps(a.url), ar = AREAS[a.area] || {};
+    return h('article', {class:'news', color:areaColor(a.area)},
+      coverEl(a, hasUrl),
+      h('p', {class:'n-kick'}, `${ar.zone || ''} · ${STATUS_LABEL[a.status] || a.status}`),
+      h('h3', {}, a.name),
+      h('p', {class:'n-deck'}, a.desc || ''),
+      h('div', {class:'n-act'},
+        hasUrl ? h('a', {class:'n-read', href:a.url, target:'_blank', rel:'noopener noreferrer', onclick:() => sapi('logOpen', a.id).catch(()=>{})}, 'Buka aplikasi →')
+               : h('button', {class:'n-read', type:'button', onclick:() => isAdmin() ? openForm(a) : openLogin('Masukkan PIN admin untuk mengisi link aplikasi.')}, '+ Isi link'),
+        h('span', {class:'sp'}),
+        favBtn(a, 'icon-btn'),
+        h('button', {class:'icon-btn', type:'button', title:'Buat poster iklan', 'aria-label':`Buat poster ${a.name}`, onclick:() => openPoster(a.id)}, icon('poster')),
+        isAdmin() ? h('button', {class:'icon-btn', type:'button', title:'Edit', 'aria-label':`Edit ${a.name}`, onclick:() => openForm(a)}, icon('edit')) : null));
+  };
+  const newspaper = (list) => {
+    const now = new Date();
+    const tgl = new Intl.DateTimeFormat('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'Asia/Jakarta' }).format(now);
+    const edisi = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
+    const live = list.filter(a => a.status === 'live').length;
+    const top = spotPicks(list)[0];
+    const ar = AREAS[top.area] || {};
+    const lead = h('article', {class:'lead', color:areaColor(top.area)},
+      coverEl(top, safeHttps(top.url)),
+      h('div', {class:'lead-txt'},
+        h('p', {class:'n-kick'}, `Berita utama · ${ar.label || ''} ${ar.zone || ''}`),
+        h('h3', {}, top.name),
+        h('p', {class:'deck'}, top.desc || 'Aplikasi andalan di rak QCode.'),
+        h('p', {class:'byline'}, `Oleh Redaksi QCode · status ${STATUS_LABEL[top.status] || top.status} · ${top.opens || 0}× dibuka`),
+        h('div', {class:'slide-act'}, openBtn(top, 'btn primary'), h('button', {class:'btn', type:'button', onclick:() => openPoster(top.id)}, icon('poster'), 'Poster'))));
+    const cols = Object.entries(AREAS).map(([k, z]) => {
+      const apps = list.filter(a => a.area === k && a.id !== top.id);
+      if (!apps.length) return null;
+      return h('section', {class:'sec-col'},
+        h('div', {class:'sec-bar'}, h('span', {}, `${z.label} · ${z.zone}`), h('button', {class:'n-more', type:'button', onclick:() => goZone(k)}, `${apps.length} berita →`)),
+        ...apps.map(newsItem));
+    }).filter(Boolean);
+    return h('div', {class:'paper'},
+      h('header', {class:'mast'},
+        h('div', {class:'mast-top'}, h('span', {}, `Edisi No. ${edisi}`), h('span', {}, tgl), h('span', {}, 'Harga: Gratis')),
+        h('h2', {class:'mast-title'}, 'Harian QCode'),
+        h('p', {class:'mast-sub'}, `Kabar terbaru dari rak aplikasi · ${list.length} aplikasi · ${live} aktif`)),
+      lead,
+      h('div', {class:'sections'}, ...cols));
+  };
+
   const renderChips = () => {
     const n = (k) => k === 'all' ? state.apps.length : count(a => a.area === k);
     const items = [['all','Semua','var(--ink)'], ...Object.entries(AREAS).map(([k, a]) => [k, `${a.label} · ${a.zone}`, areaColor(k)])];
@@ -1812,6 +1912,8 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
     } else {
       if (!state.q && state.area === 'all') {
         // Mode galeri: sorotan besar + baris favorit + baris per zona
+        out.push(viewSwitch());
+        if (view === 'koran') { out.push(newspaper(list)); $('#content').replaceChildren(...out); return; }
         out.push(spotlight(list));
         // Rak lemari kayu: tiap zona = satu tingkat rak, aplikasi dipajang seperti bingkai foto
         const shelves = [];
@@ -1821,7 +1923,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
           const apps = list.filter(a => a.area === k);
           if (apps.length) shelves.push(rail(`${z.label} · ${z.zone}`, `${apps.length} aplikasi`, apps, k, areaColor(k), k));
         });
-        if (shelves.length) out.push(h('div', {class:'cabinet', role:'group', 'aria-label':'Rak aplikasi'}, ...shelves));
+        if (shelves.length) out.push(view === 'lemari' ? h('div', {class:'cabinet', role:'group', 'aria-label':'Rak aplikasi'}, ...shelves) : h('div', {}, ...shelves));
       } else {
         // Pencarian / halaman zona: kartu lengkap dalam grid
         const z = AREAS[state.area];
