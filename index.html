@@ -1076,6 +1076,55 @@ html.zm .cover{min-height:calc(100dvh / var(--z,1))}
 @keyframes adIn{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:none}}
 @media (max-width:640px){.adwall{padding:20px 12px 22px}.ad-big{grid-column:auto;grid-row:auto}.ad-grid{grid-template-columns:minmax(0,1fr)}}
 
+
+/* ================= BAGIAN ATAS PORTAL: gaya papan iklan ================= */
+.bar{--surface:#1B0C36;--surface-2:#24134A;--ink:#F6F1FF;--muted:#C9BEE6;--line:rgb(255 255 255 / .16);background:rgb(27 12 54 / .92);border-bottom-color:rgb(255 255 255 / .08);color:var(--ink)}
+.bar .btn{background:rgb(255 255 255 / .06);color:#F6F1FF}
+.bar .btn:hover{background:rgb(255 255 255 / .14)}
+.bar .admin-pill{background:#FFD23F;color:#1A1206}
+.hero{background:radial-gradient(rgb(255 255 255 / .09) 1.3px,transparent 1.5px) 0 0/12px 12px,linear-gradient(120deg,#22093F 0%,#4A1670 45%,#8E2B78 100%);clip-path:polygon(0 0,100% 0,100% 100%,0 calc(100% - 26px))}
+.hero::before{background:repeating-linear-gradient(-45deg,#FFD23F 0 14px,#1A1206 14px 28px);opacity:1;inset:auto 0 0 0;height:8px;top:auto}
+.hero::after{background:radial-gradient(circle,rgb(255 111 174 / .45),transparent 65%)}
+.hero .inner{padding-block:30px 78px;align-items:center;position:relative}
+.hero .eyebrow{display:inline-block;color:#1A1206;background:#FFD23F;padding:5px 10px;border-radius:5px;rotate:-2deg;font-weight:700;letter-spacing:.14em}
+.hello{font-size:clamp(40px,6.2vw,76px);color:#fff;margin-top:12px;filter:drop-shadow(0 4px 0 rgb(0 0 0 / .3))}
+.hero:not(.zoned) .hello-txt .hw:last-child{background:#FFD23F;padding:.02em .16em 0;border-radius:6px;margin-left:.08em;box-shadow:0 5px 0 #1A1206;rotate:-2deg}
+.hero:not(.zoned) .hello-txt .hw:last-child .hl{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#1A1206;text-shadow:none}
+.hello .hl{text-shadow:none}
+.hero-sub{font:700 clamp(15px,1.5vw,19px)/1.35 var(--f-sans,inherit);color:#FFE9F4;margin-top:14px}
+/* Statistik jadi stiker bulat */
+.mini-stats{gap:14px;align-items:center}
+.ms{width:96px;height:96px;min-width:0;padding:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid #1A1206;box-shadow:0 5px 0 #1A1206;background:#FFD23F;color:#1A1206;rotate:-6deg;transition:rotate .3s}
+.ms:nth-child(2){background:#7CE7C8;rotate:5deg}
+.ms:nth-child(3){background:#FF8FC0;rotate:-3deg}
+.ms:hover{rotate:0deg}
+.ms b{font-size:32px;color:#1A1206}
+.ms span{color:#1A1206;font-weight:700;font-size:10px}
+/* Maskot Q mengintip di pojok hero */
+.hero-q{position:absolute;right:max(16px,calc(50% - 600px));bottom:30px;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+.hq-svg{width:92px;height:105px;filter:drop-shadow(0 8px 10px rgb(0 0 0 / .35))}
+.hq-bubble{order:-1;margin:0 0 4px 0;max-width:200px;background:#fff;color:#1A0D3A;border:2px solid #1A0D3A;border-radius:14px;padding:6px 11px;font-size:12.5px;font-weight:700;line-height:1.3;position:relative}
+.hq-bubble::after{content:"";position:absolute;right:22px;bottom:-7px;width:10px;height:10px;background:#fff;border-right:2px solid #1A0D3A;border-bottom:2px solid #1A0D3A;rotate:45deg}
+.hero .mini-stats{margin-right:0;flex-wrap:nowrap}
+.hero:not(.zoned) .inner{padding-right:250px;flex-wrap:nowrap}
+.hero:not(.zoned) .mini-stats{gap:10px}
+.hero:not(.zoned) .ms{width:88px;height:88px}
+@media (max-width:1100px){.hero:not(.zoned) .inner{padding-right:16px;flex-wrap:wrap}}
+.hero.zoned .hero-q{display:none}
+.hero.zoned .mini-stats{margin-right:0}
+.hero.zoned{background:radial-gradient(rgb(255 255 255 / .09) 1.3px,transparent 1.5px) 0 0/12px 12px,linear-gradient(120deg,#22093F,color-mix(in srgb,var(--zc) 70%,#22093F))}
+/* Kotak pencarian seperti stiker tebal */
+.panel{border:2px solid #1A1206;box-shadow:0 6px 0 #1A1206}
+@media (prefers-reduced-motion:no-preference){
+  .hq-svg{animation:hqBob 2.4s ease-in-out infinite alternate}
+  .ms{animation:msPop .6s cubic-bezier(.3,1.6,.5,1) both}
+  .ms:nth-child(2){animation-delay:.08s}.ms:nth-child(3){animation-delay:.16s}
+}
+@keyframes hqBob{from{translate:0 0}to{translate:0 -6px}}
+@keyframes msPop{from{scale:.3;opacity:0}to{scale:1;opacity:1}}
+@media (max-width:1100px){.hero .mini-stats{margin-right:0}.hero-q{display:none}}
+@media (max-width:640px){.ms{width:76px;height:76px}.ms b{font-size:24px}.ms span{font-size:9px}.hero .inner{padding-block:22px 64px}}
+
 /* ================= STUDIO POSTER ================= */
 .poster-btn .mi{width:15px;height:15px;display:inline-grid;place-items:center}
 dialog.wide{width:min(1060px,calc(100% - 32px))}
@@ -1196,6 +1245,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       </div>
     </div>
     <div class="mini-stats" id="miniStats"></div>
+    <div class="hero-q" id="heroQ" aria-hidden="true"><p class="hq-bubble" id="heroQSay">Ayo kerja rapi!</p></div>
   </div></section>
 
   <main class="main gutter"><div class="inner">
@@ -1661,7 +1711,7 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
       hero.style.removeProperty('--zc');
       $('#heroEyebrow').textContent = fmtD.format(new Date());
       setHello(greeting(), todKind());
-      $('#heroSub').textContent = state.loading ? 'Memuat aplikasi…' : `${count(a => a.status === 'live')} aplikasi aktif dan siap dibuka.`;
+      $('#heroSub').textContent = state.loading ? 'Memuat aplikasi…' : `${count(a => a.status === 'live')} aplikasi aktif, siap bantu kerja!`;
     }
     // Animasi ulang judul & angka hanya saat zona berganti (bukan tiap ketik di pencarian)
     const key = `${state.area}|${state.loading}`;
@@ -2728,6 +2778,13 @@ dialog.wide{width:min(1060px,calc(100% - 32px))}
   // Masuk portal: sudah login → langsung; belum → layar lampu
   const goPortal = () => state.session ? enterPortal('all') : openGate();
   $('#btnLock').addEventListener('click', () => { sapi('portalLogout').catch(()=>{}); endSession('Portal dikunci. Sampai jumpa!'); });
+
+  (() => {
+    const q = document.querySelector('.bar .mini-q');
+    if (q) { const c = q.cloneNode(true); c.removeAttribute('class'); c.classList.add('hq-svg'); $('#heroQ').prepend(c); }
+    const say = () => { $('#heroQSay').textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; };
+    say(); setInterval(() => { if (!$('#portal').hidden && !document.hidden) say(); }, 9000);
+  })();
 
   /* ===== 10. NAVIGASI, PENCARIAN, JAM ===== */
   $('#btnRack').addEventListener('click', goPortal);
